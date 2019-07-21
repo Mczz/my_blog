@@ -1,4 +1,4 @@
-# mc-log
+# myblog
 
 ## Project setup
 ```
