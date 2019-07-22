@@ -1,0 +1,41 @@
+.zhuanti{
+    width: 100%;
+    padding: 35px 30px;
+    box-sizing: border-box;
+    background: #ffffff;
+    margin-top: 20px;
+    .zhuanti-title{
+        font-size: 18px;
+        color: #282828;
+        font-weight: 600;
+        margin: 0;
+        text-transform: uppercase;
+        padding-bottom: 15px;
+        margin-bottom: 25px;
+        position: relative;
+        &:after {
+            content: "";
+            background-color: #282828;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            bottom: 0;
+            position: absolute;
+            transition:all 0.5s;
+        }
+   
+    
+    }
+    // .list{
+        
+    //     li{
+    //         height: 200px;
+    //         margin-bottom: 20px;
+    //         width: 100%;
+    //         background: #000;
+    //     }
+    // }
+    &:hover .zhuanti-title::after{
+        width: 72px;
+    }
+}

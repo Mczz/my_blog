@@ -10,7 +10,7 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '*',
       name: 'defaultPage',
       redirect:'/index',
       component: defaultPage,
@@ -19,6 +19,16 @@ export default new Router({
           path: '/index',
           name: 'index',
           component:Index
+        },
+        {
+          path: '/aboutme',
+          name: 'aboutme',
+          component: () => import( './pages/aboutme.vue')
+        },
+        {
+          path: '/lmsg',
+          name: 'lmsg',
+          component: () => import( './pages/lmsg.vue')
         }
       ]
     }

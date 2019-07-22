@@ -1,0 +1,29 @@
+.lmsg{
+    width: 1170px;
+    margin: 0 auto;
+    .title{
+        margin-top: 10px;
+        border-bottom: 1px solid #bfbfbf;
+        font-size: 14px;
+        .n1 {
+            width: 100px;
+            display: block;
+            line-height: 40px;
+            text-align: center;
+            float: left;
+            color: #fff;
+            background: #3a6ab5;
+        }
+        .n2{
+            display: block;
+            line-height: 40px;
+            text-align: center;
+            float: right;
+            color: #000;
+        }
+    }
+    .liuyanbox{
+        background: #fff;
+        margin-top: 20px;
+    }
+}

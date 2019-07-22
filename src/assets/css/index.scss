@@ -1,62 +1,59 @@
-.index-content{
+.index-content {
     width: 1170px;
     margin: 0 auto;
-    .picbox{
+    .picbox {
         height: 450px;
-        .top-pics{
-            .top-pic{
+        .el-carousel{
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .top-pics {
+            .top-pic {
                 width: 100%;
                 height: 215px;
-                &:last-child{
+                background: #000;
+                overflow: hidden;
+                display: block;
+                clear: both;
+                position: relative;
+                &:last-child {
                     margin-top: 20px;
                 }
-                img{
-                    width: 100%;
-                    height: 100%;
-                }
-            }
-        }
-    }
-    .content{
-        margin-top: 20px;
-        .zhuanti{
-            width: 100%;
-            height: 769px;
-            padding: 35px 30px;
-            box-sizing: border-box;
-            background: #456541;
-            .zhuanti-title{
-                font-size: 18px;
-                color: #282828;
-                font-weight: 600;
-                margin: 0;
-                text-transform: uppercase;
-                padding-bottom: 15px;
-                margin-bottom: 25px;
-                position: relative;
-                &:after {
-                    content: "";
-                    background-color: #282828;
-                    left: 0;
-                    width: 50px;
-                    height: 2px;
-                    bottom: 0;
-                    position: absolute;
-                    transition:all 0.5s;
-                }
-                &:hover::after{
-                    width: 72px;
-                }
-            }
-            .list{
-                
-                li{
-                    height: 200px;
-                    margin-bottom: 20px;
-                    width: 100%;
+                i{
+                    width:100%;
+                    height:100%;
+                    display: block;
                     background: #000;
+                    img {
+                        opacity: 0.6;
+                        width: 100%;
+                        height: 100%;
+                        transition: all 0.5s ease;
+                    }
+                }
+                p {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    padding: 10px 20px;
+                    font-size: 15px;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    background: rgba(0, 0, 0, 0.5);
+                    color: #fff;
+                    
+                }
+                &:hover img{
+                    opacity: 0.9;
                 }
             }
+
+
         }
     }
+
 }

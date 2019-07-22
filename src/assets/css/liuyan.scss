@@ -1,0 +1,28 @@
+.gbox {
+    padding: 20px;
+    overflow: hidden;
+    font-size: 15px;
+
+    p {
+        margin-bottom: 10px;
+
+        .tnr {
+            display: block;
+        }
+
+        textarea {
+            width: 100%;
+        }
+        input[type="submit"] {
+            display: block;
+            background: #303030;
+            color: #fff;
+            border: 0;
+            line-height: 30px;
+            padding: 0 20px;
+            border-radius: 5px;
+            float: right;
+            cursor: pointer;
+        }
+    }
+}

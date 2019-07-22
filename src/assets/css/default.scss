@@ -8,7 +8,7 @@
             margin: 0 auto;
             
             .logo{
-                display:inline-block;
+                display:block;
                 color: #00A7EB;
                 font-size: 26px;
                 margin-right: 80px;
@@ -17,7 +17,6 @@
             }
             ul{
                 float: left;
-                display: inline-block;
                 line-height: 60px;
                 li{
                     display:inline-block;
@@ -35,13 +34,14 @@
                 }
             }
             .search-bar{
-                display: inline-block;
                 float: right;
                 line-height: 60px;
                 .el-input{
                     width: 220px;
                     margin-right: 20px;
-
+                    .el-input__inner{
+                        height: 30px;
+                    }
                 }
                 .search{
                     display: inline-block;
@@ -62,16 +62,29 @@
         }
     }
     .el-footer{
-        background: #000;
-        p{
+        height:160px!important;
+        .endnav{
+            margin: 0px auto;
+            margin-bottom:20px; 
             width: 1170px;
-            margin: 0 auto;
-            text-align: center;
-            line-height: 60px;
-            a{
-                color: #BDBDBD;
-                text-decoration: none;
+            p{
+                width: 1170px;
+                a{
+                    color: #BDBDBD;
+                    text-decoration: none;
+                }
+            }
+            b {
+                font-size: 16px;
+                color: #00c1de;
             }
         }
+        
+        background: #373D41;
+        width: 100%;
+        border-top: #00C1DE 10px solid;
+        padding: 30px 0;
+        color: #73777a;
+        font-size: 14px;
     }
 }

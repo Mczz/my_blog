@@ -1,0 +1,86 @@
+.guanzhu {
+    
+    li {
+        font-size: 12px;
+        margin-bottom: 10px;
+        background: #fff;
+        color: #525252;
+        line-height: 40px;
+        padding: 0 0 0 34px;
+        border: 1px solid #ddd;
+        border-radius: 2px;
+        position: relative;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        &:hover span {
+            width: 120px;
+        }
+    }
+    a {
+        color: #555;
+        text-decoration: none;
+        &:hover{
+            color: #12aae8;
+        }
+        span {
+            color: #fff;
+        }
+    }
+    
+    span {
+        float: right;
+        text-align: center;
+        width: 100px;
+        -moz-transition: all 0.5s ease;
+        -webkit-transition: all 0.5s ease;
+        -ms-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+        transition: all 0.5s;
+    }
+    .sina {
+        border: #ec3d51 1px solid;
+        background: url(../assets/images/gzbg.jpg) no-repeat 0 10px;
+        span {
+            background: #ec3d51;
+        }
+    }
+
+    .qq {
+        border: #12aae8 1px solid;
+
+        background: url(../assets/images/gzbg.jpg) no-repeat 0 -98px;
+        span {
+            background: #12aae8;
+
+        }
+    }
+
+    .email {
+        border: #2ab39a 1px solid;
+
+        background: url(../assets/images/gzbg.jpg) no-repeat 0 -150px;
+        span {
+            background: #2ab39a;
+
+        }
+    }
+
+    .wxgzh {
+        border: #199872 1px solid;
+        background: url(../assets/images/gzbg.jpg) no-repeat 0 -200px;
+        span {
+            background: #199872;
+        }
+    }
+
+    .wx {
+        overflow: hidden;
+        padding: 0;
+        img {
+            width: 100%;
+        }
+    }
+    
+}
