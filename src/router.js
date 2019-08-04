@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import defaultPage from './views/default.vue'
 import Index from '@/pages/index.vue'
 
 Vue.use(Router)
@@ -9,12 +8,13 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
-    {
-      path: '*',
-      name: 'defaultPage',
-      redirect:'/index',
-      component: defaultPage,
-      children:[
+    
+        {
+          path: '*',
+          name: 'default',
+          redirect:'/index',
+        },
+
         {
           path: '/index',
           name: 'index',
@@ -30,8 +30,8 @@ export default new Router({
           name: 'lmsg',
           component: () => import( './pages/lmsg.vue')
         }
-      ]
-    }
+    //   ]
+    // }
     // {
     //   path: '/about',
     //   name: 'about',
