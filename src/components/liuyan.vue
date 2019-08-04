@@ -7,22 +7,23 @@
         </p>
         <p>
           <span>您的姓名:</span>
-          <input name="name" type="text" id="name" />
+          <input name="name" type="text" id="name"  placeholder="不超过10个字符"/>
           *
         </p>
         <p>
           <span>联系邮箱:</span>
-          <input name="email" type="text" id="email" />
+          <input name="email" type="text" id="email" placeholder="不超过30个字符"/>
           *
         </p>
         <p>
           <span class="tnr">留言内容:</span>
-          <textarea name="lytext" cols="60" rows="12" id="lytext"></textarea>
+          <textarea name="lytext" cols="60" rows="12" id="lytext" placeholder="不超过200个字"></textarea>
         </p>
-        <p>
-          <input type="submit" name="Submit3" value="提交" />
-        </p>
+        
       </form>
+      <p>
+          <button class="submit">提交</button>
+        </p>
     </div>
 </template>
 

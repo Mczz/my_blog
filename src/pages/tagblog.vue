@@ -1,49 +1,18 @@
 <template>
-  <div class="index-content">
-    <el-row class="picbox" :gutter="20">
-      <el-col :span="16">
-        <el-carousel trigger="click" height="450px">
-          <el-carousel-item v-for="(item,index) in sliderlist" :key="index">
-            <img :src="item.img" @click="openBlogById(item.id)" />
-          </el-carousel-item>
-        </el-carousel>
-      </el-col>
-      <el-col :span="8" class="top-pics">
-        <div
-          class="top-pic"
-          v-for="(item,index) in twolist"
-          :key="index"
-          @click="openBlogById(item.id)"
-        >
-          <a href="#">
-            <i>
-              <img :src="item.img" />
-            </i>
-            <p>{{ item.title }}</p>
-          </a>
-        </div>
-      </el-col>
+  <div class="lmsg">
+    <el-row class="title">
+      <span class="n1">{{}}</span>
+      <span class="n2">时间最会骗人，但也能让你明白，这个世界没有什么不能失去的，离去的都是风景，留下的才是人生，走到最后的，就是对的人。</span>
     </el-row>
-    <el-row :gutter="20" class="content">
-      <el-col :span="16">
+    <el-row :gutter="40">
+      <el-col class="liuyanbox" :span="16">
         <blog v-for="(item,index) in blogList" :key="index" :blog="item" />
         <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
       </el-col>
       <el-col :span="8">
-        <zhuanti title="标签云">
-          <ul>
-            <tag
-              v-for="(item,index) in tags"
-              :key="index"
-              :taginfo="item"
-              :style="{backgroundColor:randomColor()}"
-            />
-          </ul>
+        <zhuanti title="特别推荐">
+          <special />
         </zhuanti>
-        <zhuanti title="推荐文章">
-          <recommend />
-        </zhuanti>
-
         <zhuanti ref="fixed" title="关注我 么么哒">
           <guanzhu />
         </zhuanti>
@@ -54,49 +23,22 @@
 
 <script>
 import zhuanti from "@/components/zhuanti.vue";
-import recommend from "@/components/recommend.vue";
-import tag from "@/components/tag.vue";
 import guanzhu from "@/components/guanzhu.vue";
 import blog from "@/components/blog.vue";
-import axios from "axios";
+import special from "@/components/special.vue";
 
 export default {
-  created() {
-    // axios.get("/api/getslider")
-    //   .then(function(response) {
-    //     this.sliderlist = response.data.sliderlist;
-    //   });
-    // axios.get("/api/gettwoblog")
-    //   .then(function(response) {
-    //     this.twolist = response.data.twolist;
-    //   });
+  components: {
+    zhuanti,
+    guanzhu,
+    special,
+    blog
   },
-  mounted() {
-    window.addEventListener("scroll", this.handleScroll);
+  created(){
+    this.tagid = this.$route.params.tagid
   },
   data() {
     return {
-      sliderlist: [
-        {
-          img:
-            "http://www.yangqq.com/d/file/news/s/2013-07-09/82ad18fca433c2a102319063a17cfc8f.jpg",
-          id: 1
-        }
-      ],
-      twolist: [
-        {
-          img:
-            "http://www.yangqq.com/d/file/news/s/2013-07-09/82ad18fca433c2a102319063a17cfc8f.jpg",
-          id: 1,
-          title: "做一个安安静静的美男子"
-        },
-        {
-          img:
-            "http://www.yangqq.com/d/file/news/s/2013-07-09/82ad18fca433c2a102319063a17cfc8f.jpg",
-          id: 2,
-          title: "做一个安安静静的美男子"
-        }
-      ],
       blogList: [
         {
           title: "程序员职业生涯该如何发展？",
@@ -206,51 +148,27 @@ export default {
             "http://www.yangqq.com/d/file/news/s/2013-07-09/82ad18fca433c2a102319063a17cfc8f.jpg"
         }
       ],
-      tags: [
-        { tagname: "博客", href: "#" },
-        { tagname: "博w客", href: "#" },
-        { tagname: "博das客", href: "#" },
-        { tagname: "博客", href: "#" },
-        { tagname: "博asd客", href: "#" },
-        { tagname: "博客", href: "#" }
-      ]
+      tagid:{
+        
+      }
     };
   },
-  computed: {
-    randomColor() {
-      return function() {
-        var red = Math.random() * 205 + 50;
-        var blue = Math.random() * 155 + 100;
-        var green = Math.random() * 255;
-        return `rgb(${red},${green},${blue}`;
-      };
-    }
-  },
   methods: {
-    openBlogById(id) {
-      this.$store.dispatch("getArticleDetail", id);
-      this.$router.push({ name: "blogdetail" });
-    },
     handleScroll() {
       var scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop;
-      if (scrollTop >= 1200) {
-        var top = scrollTop - 1200;
-        this.$refs.fixed.$el.style.marginTop = top + "px";
+      if (scrollTop >= 940) {
+        var top = scrollTop - 940;
+        this.$refs.fixed.$el.style.marginTop = 90 + top + "px";
       } else {
         this.$refs.fixed.$el.style.marginTop = "20px";
       }
     }
   },
-  components: {
-    zhuanti,
-    // special,
-    recommend,
-    tag,
-    guanzhu,
-    blog
+  mounted() {
+    window.addEventListener("scroll", this.handleScroll);
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -258,11 +176,6 @@ export default {
 };
 </script>
 
-<style lang="scss">
-@import "@/assets/css/index.scss";
-// .fixed{
-//   position: fixed;
-//   top:0px;
-//   width: 377px;
-// }
+<style lang='scss'>
+@import "@/assets/css/lmsg.scss";
 </style>

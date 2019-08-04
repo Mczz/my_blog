@@ -1,14 +1,14 @@
 <template>
   <div class="blogs">
-    <h3 class="blogtitle">
-      <a href="/life/10.html" target="_blank">{{blog.title}}</a>
+    <h3 class="blogtitle" @click="openBlogById">
+      {{blog.title}}
     </h3>
-    <div v-if='blog.img' class="blogpic">
+    <div v-if="blog.img" class="blogpic"  @click="openBlogById">
       <a :href="blog.href">
-      <img :src="blog.img" alt="">
+        <img :src="blog.img" alt />
       </a>
     </div>
-    
+
     <p class="blogtext">{{ blog.text}}</p>
     <div class="bloginfo">
       <ul>
@@ -28,8 +28,13 @@
 
 <script>
 export default {
-  props:['blog'],
-  
+  props: ["blog"],
+  methods: {
+    openBlogById(id) {
+      this.$store.dispatch("getArticleDetail", id);
+      this.$router.push({ name: "blogdetail" });
+    }
+  }
 };
 </script>
 

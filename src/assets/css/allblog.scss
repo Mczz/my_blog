@@ -1,4 +1,4 @@
-.lmsg {
+.allblog {
     width: 1170px;
     margin: 0 auto;
 
@@ -26,17 +26,22 @@
         }
     }
 
-    .liuyanbox {
+    .titlebox {
         background: #fff;
         margin-top: 20px;
-        .morelmsg {
+        min-height: 670px;
+        padding: 10px;
+        ul{
             margin-left: 20px;
-            cursor: pointer;
-            a {
-                font-size: 14px;
-                color: #000;
-            }
         }
+        li{
+            margin: 5px 20px;
+            list-style:disc;    
+            // width: 100%;
+            // background: #ccc;
+            cursor: pointer;
+            text-decoration: underline;
+        } 
        
     }
 }

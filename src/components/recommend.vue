@@ -2,11 +2,9 @@
   <ul class="list">
     <li v-for="(item,index) in list" :key="index" :class="{tjpic:index == 0,sidenews:index != 0}">
       <i>
-        <img :src="item.img" />
+        <img :src="item.img" @click="openBlogById(item.id)" />
       </i>
-      <p>
-        <a :href="item.href" :title="item.content" target="_blank">{{item.content}}</a>
-      </p>
+      <p @click="openBlogById(item.id)">{{item.content}}</p>
       <span>{{item.ctime}}</span>
     </li>
   </ul>
@@ -43,6 +41,12 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    openBlogById(id) {
+      this.$store.dispatch("getArticleDetail", id);
+      this.$router.push({ name: "blogdetail" });
+    }
   }
 };
 </script>
@@ -103,13 +107,14 @@ export default {
 }
 .sidenews p {
   line-height: 24px;
-  color: #888;
   font-size: 15px;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  cursor: pointer;
+  color: #48494d;
 }
 .sidenews p a {
   color: #48494d;

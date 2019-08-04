@@ -1,0 +1,165 @@
+.blogdetail {
+    width: 1170px;
+    margin: 0 auto;
+
+    .title {
+        margin-top: 10px;
+        border-bottom: 1px solid #bfbfbf;
+        font-size: 14px;
+
+        .n1 {
+            width: 100px;
+            display: block;
+            line-height: 40px;
+            text-align: center;
+            float: left;
+            color: #fff;
+            background: #3a6ab5;
+        }
+
+        .n2 {
+            display: block;
+            line-height: 40px;
+            text-align: center;
+            float: right;
+            color: #000;
+        }
+    }
+
+    .articlebox {
+        background: #fff;
+        margin-top: 20px;
+        padding: 20px;
+        min-height: 480px;
+
+        .article {
+            margin-left: 20px;
+
+            .blogtitle {
+                margin: 0 0 10px 0;
+                font-size: 24px;
+                overflow: hidden;
+                font-weight: normal;
+            }
+
+            .blogtext {
+                font-size: 16px;
+                line-height: 1.8;
+                color: #566573;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                -webkit-box-orient: vertical;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                margin-top: 20px;
+            }
+
+
+            .bloginfo {
+                overflow: hidden;
+                margin-top: 30px;
+
+                li {
+                    float: left;
+                    font-size: 12px;
+                    padding: 0 0 0 20px;
+                    margin: 0 15px 0 0;
+                    color: #748594;
+                    line-height: 1.5;
+                    display: inline-block;
+
+                    a {
+                        color: #748594;
+
+                        &：hover {
+                            color: #000;
+                        }
+                    }
+                }
+
+                .author {
+                    background: url(../assets/images/auicon.jpg) no-repeat 0 0
+                }
+
+                .lmname {
+                    background: url(../assets/images/auicon.jpg) no-repeat top -23px left;
+                }
+
+                .timer {
+                    background: url(../assets/images/auicon.jpg) no-repeat top -44px left;
+                }
+
+                .view {
+                    background: url(../assets/images/auicon.jpg) no-repeat top -64px left;
+                }
+
+                .like {
+                    background: url(../assets/images/auicon.jpg) no-repeat top -85px left;
+                }
+            }
+        }
+
+        .share {
+            overflow: hidden;
+
+            padding: 20px;
+            .diggit {
+                float: left;
+                width: 140px;
+                margin: auto;
+                cursor: pointer;
+                background: #E2523A url(../assets/images/dzbg.jpg) no-repeat center left 10px;
+                color: #fff;
+                box-shadow: 1px 2px 6px 0px rgba(0, 0, 0, .2);
+                border-radius: 3px;
+                line-height: 40px;
+                text-align: center;
+                padding-left: 20px;
+            }
+        }
+        .pl {
+            margin-left: 20px;
+            h2 {
+                background: url(../assets/images/newsbg.png) no-repeat left 10px center;
+                border-bottom: #000 2px solid;
+                line-height: 40px;
+                font-size: 14px;
+                padding-left: 30px;
+                color: #000;
+            }
+            .saying {
+                line-height: 30px;
+                color: #a9a6a6;
+                font-size: 15px;
+                span{
+                    float: right;
+                    color: #3a6ab5;
+                    cursor: pointer;
+                }
+            }
+            .yname {
+                margin: 10px 10px 10px 0;
+                font-size: 15px;
+                span{
+                    padding-right: 10px;
+                }
+            }
+            textarea {
+                width: 100%;
+            }
+            .submit{
+                display: block;
+                background: #303030;
+                color: #fff;
+                border: 0;
+                line-height: 30px;
+                padding: 0 20px;
+                border-radius: 5px;
+                float: right;
+                cursor: pointer;
+            }
+        }
+
+    }
+
+}
