@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>wangEditor demo</title>
+</head>
+
+<body>
+    <h1>博客编辑</h1>
+    <div>
+        标题：<input type="text" placeholder="请输入标题" id="title">
+        标签：<input type="text" placeholder="请输入标签，用逗号隔开" id="tags">
+    </div>
+
+    <div id="editor">
+        <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+    </div>
+    <button onclick="submit()">提交</button>
+
+    <!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
+    <script type="text/javascript" src="./wangEditor.min.js"></script>
+    <script type="text/javascript">
+        var E = window.wangEditor
+        var editor = new E('#editor')
+        // 或者 var editor = new E( document.getElementById('editor') )
+        editor.create()
+
+        function submit() {
+            var content = editor.txt.text();
+            var title = document.getElementById('title').value;
+            var tags = document.getElementById('tags').value;
+            var data = {
+                title,
+                content,
+                tags
+            }
+            var ajax = new XMLHttpRequest();
+            ajax.open('post', '/editBlog');
+            ajax.send(JSON.stringify(data));
+            ajax.onreadystatechange = function () {
+                if (ajax.readyState == 4 && ajax.status == 200) {
+                    console.log(ajax.responseText); 
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>
