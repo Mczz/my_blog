@@ -1,9 +1,9 @@
 <template>
   <div class="blogs">
-    <h3 class="blogtitle" @click="openBlogById">
+    <h3 class="blogtitle" @click="openBlogById(blog.id)">
       {{blog.title}}
     </h3>
-    <div v-if="blog.img" class="blogpic"  @click="openBlogById">
+    <div v-if="blog.img" class="blogpic"  @click="openBlogById(blog.id)">
       <a :href="blog.href">
         <img :src="blog.img" alt />
       </a>
@@ -13,8 +13,8 @@
     <div class="bloginfo">
       <ul>
         <li class="author"></li>
-        <li class="lmname">
-          <a href="/life/" target="_blank">{{blog.tag}}</a>
+        <li class="lmname" @click="openTags(blog.tagId,blog.tagName)">
+          {{blog.tag}}
         </li>
         <li class="timer">{{ blog.ctime}}</li>
         <li class="view">
@@ -33,6 +33,10 @@ export default {
     openBlogById(id) {
       this.$store.dispatch("getArticleDetail", id);
       this.$router.push({ name: "blogdetail" });
+    },
+    openTags(id,tagName){
+      this.$store.dispatch("getTagBlog", id);
+      this.$router.push({ name: "tagblog",params:{tagName}})
     }
   }
 };

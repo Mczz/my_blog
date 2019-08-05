@@ -14,8 +14,36 @@ function insertBlog(title,content,views,tags,ctime,utime,like,img,success){
     connection.end();
 }
 
-function getBlogList(success){
-    var querySql = "select * from blog order by id limit 1";
+function getBlogList(page,pageSize,success){
+    var querySql = "select * from blog order by id desc limit ?,?";
+    var params = [page*pageSize,pageSize];
+    var connection = dbutil.createConnection();
+    connection.query(querySql,params,function(error,result){
+        if(error == null){
+            
+            success(result)
+        }else{
+            console.log(error)
+        }
+    })
+    connection.end();
+}
+function getSlider(success){
+    var querySql = "select img,id from blog order by like desc limit 0,3";
+    var params = [];
+    var connection = dbutil.createConnection();
+    connection.query(querySql,params,function(error,result){
+        if(error == null){
+            
+            success(result)
+        }else{
+            console.log(error)
+        }
+    })
+    connection.end();
+}
+function getTwoBlog(success){
+    var querySql = "select img,id,title from blog order by id desc limit 3,2";
     var params = [];
     var connection = dbutil.createConnection();
     connection.query(querySql,params,function(error,result){
@@ -28,4 +56,36 @@ function getBlogList(success){
     connection.end();
 }
 
+function getBlogTotal(success){
+    var querySql = "select count(1) from blog";
+    var params = [];
+    var connection = dbutil.createConnection();
+    connection.query(querySql,params,function(error,result){
+        if(error == null){   
+            success(result)
+        }else{
+            console.log(error)
+        }
+    })
+    connection.end();
+}
+function getAllBlog(success){
+    var querySql = "select id,title from blog";
+    var params = [];
+    var connection = dbutil.createConnection();
+    connection.query(querySql,params,function(error,result){
+        if(error == null){   
+            success(result)
+        }else{
+            console.log(error)
+        }
+    })
+    connection.end();
+}
+
 module.exports.insertBlog = insertBlog;
+module.exports.getBlogList = getBlogList;
+module.exports.getBlogTotal = getBlogTotal;
+module.exports.getSlider = getSlider;
+module.exports.getTwoBlog = getTwoBlog;
+module.exports.getAllBlog = getAllBlog;

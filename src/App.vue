@@ -9,7 +9,6 @@
             <router-link tag="li" to="/index">网站首页</router-link>
             <router-link tag="li" to="/aboutme">关于我</router-link>
             <router-link tag="li" to="/allblog">全部</router-link>
-            <!-- <router-link tag="li" to="/a">关于</router-link> -->
             <router-link tag="li" to="/lmsg">留言</router-link>
           </ul>
           <div class="search-bar">

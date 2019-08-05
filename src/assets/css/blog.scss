@@ -89,6 +89,10 @@
 
         .lmname {
             background: url(../assets/images/auicon.jpg) no-repeat top -23px left;
+            cursor: pointer;
+            &:hover{
+                text-decoration: underline;
+            }
         }
 
         .timer {

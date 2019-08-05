@@ -7,61 +7,8 @@
     <el-row :gutter="40">
       <el-col :span="16" class="titlebox">
         <ul>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
-          <li>这是一篇博客</li>
+          <li v-for="item in blogTitleList" :key="item.id" @click="openBlogById(item.id)">{{ item.title }}</li>
+         
         </ul>
       </el-col>
       <el-col :span="8">
@@ -76,17 +23,32 @@
 <script>
 import zhuanti from "@/components/zhuanti.vue";
 import guanzhu from "@/components/guanzhu.vue";
-
+import axios from 'axios';
 export default {
-  components: {
-    zhuanti,
-    guanzhu
-  },
+  //个人信息固定
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
+  },
+  //获取博客标题列表
+  created(){
+    axios.get("/api/getallblog").then(function(response) {
+      this.blogTitleList = response.data.blogTitleList;
+    });
+  },
+  data () {
+    return {
+      blogTitleList:[{
+        id:1,
+        title:'这是一篇水水水水'
+      }]
+    }
+  },
+  components: {
+    zhuanti,
+    guanzhu
   },
   methods: {
       handleScroll() {
@@ -100,7 +62,11 @@ export default {
       } else {
         this.$refs.fixed.$el.style.marginTop = "20px";
       }
-    }
+    },
+    openBlogById(id) {
+      this.$store.dispatch("getArticleDetail", id);
+      this.$router.push({ name: "blogdetail" });
+    },
   }
 };
 </script>

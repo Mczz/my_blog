@@ -26,8 +26,13 @@
     </el-row>
     <el-row :gutter="20" class="content">
       <el-col :span="16">
-        <blog v-for="(item,index) in blogList" :key="index" :blog="item" />
-        <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+        <blog v-for="item in blogList" :key="item.id" :blog="item" />
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="total"
+          @current-change="handleCurrentChange"
+        ></el-pagination>
       </el-col>
       <el-col :span="8">
         <zhuanti title="标签云">
@@ -62,14 +67,30 @@ import axios from "axios";
 
 export default {
   created() {
-    // axios.get("/api/getslider")
-    //   .then(function(response) {
-    //     this.sliderlist = response.data.sliderlist;
-    //   });
-    // axios.get("/api/gettwoblog")
-    //   .then(function(response) {
-    //     this.twolist = response.data.twolist;
-    //   });
+    //获取轮播图
+    axios.get("/api/getslider").then(function(response) {
+      this.sliderlist = response.data.data.sliderlist;
+    });
+    //获取右侧两图
+    axios.get("/api/gettwoblog").then(function(response) {
+      this.twolist = response.data.data.twolist;
+    });
+    //获取标签云
+    axios.get("/api/gettags").then(function(response) {
+      this.tags = response.data.data.tagList;
+    });
+    //获取博客
+    axios.get("/api/getblogs", {
+        params: {
+          page: 1
+        }
+      }).then(function(response) {
+        this.blogList = response.data.data.blogList;
+      });
+    //获取总数
+    axios.get("/api/getblogtotal").then(function(response) {
+        this.total = response.data.data.total;
+      });
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
@@ -97,123 +118,12 @@ export default {
           title: "做一个安安静静的美男子"
         }
       ],
-      blogList: [
-        {
-          title: "程序员职业生涯该如何发展？",
-          text:
-            "四年的时间，学习专业课程，临近毕业恨不能找个简单轻松的工作远离编程，可啊实打实大师的撒打算的爱思大声道爱思爱思大叔的阿萨德爱思大叔大事发生法规啊是微薄的工资跟专业相比，找个专业的工作工资能高好几倍。好不容易找到个跟专业符合的工作，五年...",
-          ctime: "2018-07-15",
-          href: "#",
-          tag: "慢生活",
-          view: 7,
-          like: 1,
-          img:
-            "http://www.yangqq.com/d/file/news/s/2013-07-09/82ad18fca433c2a102319063a17cfc8f.jpg"
-        },
-        {
-          title: "程序员职业生涯该如何发展？",
-          text:
-            "四年的时间，学习专业课程，临近毕业恨啊实打实的撒大叔大叔的撒大叔大叔大叔的撒大叔的阿萨德爱思爱思的阿萨达是大叔的 的点点滴滴多多多多多多多多多多多多多多多多多多多多多多撒阿萨德大多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多 萨顶顶多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多撒不能找个简单轻松的工作远离编程，可是微薄的工资跟专业相比，找个专业的工作工资能高好几倍。好不容易找到个跟专业符合的工作，五年...",
-          ctime: "2018-07-15",
-          href: "#",
-          tag: "慢生活",
-          view: 7,
-          like: 1,
-          id: 1
-        },
-        {
-          title: "程序员职业生涯该如何发展？",
-          text:
-            "四年的时间，学习专业课程，临近毕业恨不能找个简单轻松的工作远离编程，可啊实打实大师的撒打算的爱思大声道爱思爱思大叔的阿萨德爱思大叔大事发生法规啊是微薄的工资跟专业相比，找个专业的工作工资能高好几倍。好不容易找到个跟专业符合的工作，五年...",
-          ctime: "2018-07-15",
-          href: "#",
-          tag: "慢生活",
-          view: 7,
-          like: 1,
-          img:
-            "http://www.yangqq.com/d/file/news/s/2013-07-09/82ad18fca433c2a102319063a17cfc8f.jpg"
-        },
-        {
-          title: "程序员职业生涯该如何发展？",
-          text:
-            "四年的时间，学习专业课程，临近毕业恨不能找个简单轻松的工作远离编程，可啊实打实大师的撒打算的爱思大声道爱思爱思大叔的阿萨德爱思大叔大事发生法规啊是微薄的工资跟专业相比，找个专业的工作工资能高好几倍。好不容易找到个跟专业符合的工作，五年...",
-          ctime: "2018-07-15",
-          href: "#",
-          tag: "慢生活",
-          view: 7,
-          like: 1,
-          img:
-            "http://www.yangqq.com/d/file/news/s/2013-07-09/82ad18fca433c2a102319063a17cfc8f.jpg"
-        },
-        {
-          title: "程序员职业生涯该如何发展？",
-          text:
-            "四年的时间，学习专业课程，临近毕业恨不能找个简单轻松的工作远离编程，可啊实打实大师的撒打算的爱思大声道爱思爱思大叔的阿萨德爱思大叔大事发生法规啊是微薄的工资跟专业相比，找个专业的工作工资能高好几倍。好不容易找到个跟专业符合的工作，五年...",
-          ctime: "2018-07-15",
-          href: "#",
-          tag: "慢生活",
-          view: 7,
-          like: 1,
-          img:
-            "http://www.yangqq.com/d/file/news/s/2013-07-09/82ad18fca433c2a102319063a17cfc8f.jpg"
-        },
-        {
-          title: "程序员职业生涯该如何发展？",
-          text:
-            "四年的时间，学习专业课程，临近毕业恨不能找个简单轻松的工作远离编程，可啊实打实大师的撒打算的爱思大声道爱思爱思大叔的阿萨德爱思大叔大事发生法规啊是微薄的工资跟专业相比，找个专业的工作工资能高好几倍。好不容易找到个跟专业符合的工作，五年...",
-          ctime: "2018-07-15",
-          href: "#",
-          tag: "慢生活",
-          view: 7,
-          like: 1,
-          img:
-            "http://www.yangqq.com/d/file/news/s/2013-07-09/82ad18fca433c2a102319063a17cfc8f.jpg"
-        },
-        {
-          title: "程序员职业生涯该如何发展？",
-          text:
-            "四年的时间，学习专业课程，临近毕业恨不能找个简单轻松的工作远离编程，可啊实打实大师的撒打算的爱思大声道爱思爱思大叔的阿萨德爱思大叔大事发生法规啊是微薄的工资跟专业相比，找个专业的工作工资能高好几倍。好不容易找到个跟专业符合的工作，五年...",
-          ctime: "2018-07-15",
-          href: "#",
-          tag: "慢生活",
-          view: 7,
-          like: 1,
-          img:
-            "http://www.yangqq.com/d/file/news/s/2013-07-09/82ad18fca433c2a102319063a17cfc8f.jpg"
-        },
-        {
-          title: "程序员职业生涯该如何发展？",
-          text:
-            "四年的时间，学习专业课程，临近毕业恨不能找个简单轻松的工作远离编程，可啊实打实大师的撒打算的爱思大声道爱思爱思大叔的阿萨德爱思大叔大事发生法规啊是微薄的工资跟专业相比，找个专业的工作工资能高好几倍。好不容易找到个跟专业符合的工作，五年...",
-          ctime: "2018-07-15",
-          href: "#",
-          tag: "慢生活",
-          view: 7,
-          like: 1,
-          img:
-            "http://www.yangqq.com/d/file/news/s/2013-07-09/82ad18fca433c2a102319063a17cfc8f.jpg"
-        },
-        {
-          title: "程序员职业生涯该如何发展？",
-          text:
-            "四年的时间，学习专业课程，临近毕业恨不能找个简单轻松的工作远离编程，可啊实打实大师的撒打算的爱思大声道爱思爱思大叔的阿萨德爱思大叔大事发生法规啊是微薄的工资跟专业相比，找个专业的工作工资能高好几倍。好不容易找到个跟专业符合的工作，五年...",
-          ctime: "2018-07-15",
-          href: "#",
-          tag: "慢生活",
-          view: 7,
-          like: 1,
-          img:
-            "http://www.yangqq.com/d/file/news/s/2013-07-09/82ad18fca433c2a102319063a17cfc8f.jpg"
-        }
-      ],
+      blogList: [],
       tags: [
-        { tagname: "博客", href: "#" },
-        { tagname: "博w客", href: "#" },
-        { tagname: "博das客", href: "#" },
-        { tagname: "博客", href: "#" },
-        { tagname: "博asd客", href: "#" },
-        { tagname: "博客", href: "#" }
-      ]
+        { tagname: "博客", id: 1 },
+     
+      ],
+      total: 0
     };
   },
   computed: {
@@ -231,6 +141,7 @@ export default {
       this.$store.dispatch("getArticleDetail", id);
       this.$router.push({ name: "blogdetail" });
     },
+    //我的信息固定方法
     handleScroll() {
       var scrollTop =
         window.pageYOffset ||
@@ -242,11 +153,21 @@ export default {
       } else {
         this.$refs.fixed.$el.style.marginTop = "20px";
       }
+    },
+    handleCurrentChange(page) {
+      //切换页面
+      axiosget("/api/getblogs", {
+          params: {
+            page: page
+          }
+        })
+        .then(function(response) {
+          this.blogList = response.data.blogList;
+        });
     }
   },
   components: {
     zhuanti,
-    // special,
     recommend,
     tag,
     guanzhu,
@@ -260,9 +181,4 @@ export default {
 
 <style lang="scss">
 @import "@/assets/css/index.scss";
-// .fixed{
-//   position: fixed;
-//   top:0px;
-//   width: 377px;
-// }
 </style>

@@ -68,13 +68,7 @@
                     line-height: 1.5;
                     display: inline-block;
 
-                    a {
-                        color: #748594;
 
-                        &：hover {
-                            color: #000;
-                        }
-                    }
                 }
 
                 .author {
@@ -83,6 +77,11 @@
 
                 .lmname {
                     background: url(../assets/images/auicon.jpg) no-repeat top -23px left;
+                    cursor: pointer;
+                    &:hover{
+                        text-decoration: underline;
+                    }
+
                 }
 
                 .timer {
@@ -103,22 +102,24 @@
             overflow: hidden;
 
             padding: 20px;
+
             .diggit {
                 float: left;
                 width: 140px;
-                margin: auto;
-                cursor: pointer;
                 background: #E2523A url(../assets/images/dzbg.jpg) no-repeat center left 10px;
                 color: #fff;
+                border: none;
                 box-shadow: 1px 2px 6px 0px rgba(0, 0, 0, .2);
                 border-radius: 3px;
-                line-height: 40px;
+                line-height: 20px;
                 text-align: center;
                 padding-left: 20px;
             }
         }
+
         .pl {
             margin-left: 20px;
+
             h2 {
                 background: url(../assets/images/newsbg.png) no-repeat left 10px center;
                 border-bottom: #000 2px solid;
@@ -127,27 +128,33 @@
                 padding-left: 30px;
                 color: #000;
             }
+
             .saying {
                 line-height: 30px;
                 color: #a9a6a6;
                 font-size: 15px;
-                span{
+
+                span {
                     float: right;
                     color: #3a6ab5;
                     cursor: pointer;
                 }
             }
+
             .yname {
                 margin: 10px 10px 10px 0;
                 font-size: 15px;
-                span{
+
+                span {
                     padding-right: 10px;
                 }
             }
+
             textarea {
                 width: 100%;
             }
-            .submit{
+
+            .submit {
                 display: block;
                 background: #303030;
                 color: #fff;

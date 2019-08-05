@@ -11,9 +11,10 @@
           <div class="bloginfo">
             <ul>
               <li class="author"></li>
-              <li class="lmname">
-                <a href="/life/" target="_blank">{{articleDetail.tag}}</a>
-              </li>
+              <li
+                class="lmname"
+                @click="openTags(articleDetail.tagId,articleDetail.tag)"
+              >{{articleDetail.tag}}</li>
               <li class="timer">{{ articleDetail.ctime}}</li>
               <li class="view">
                 <span>{{ articleDetail.view }}</span>已阅读
@@ -26,7 +27,7 @@
         </div>
 
         <div class="share">
-          <p class="diggit">很赞哦！</p>
+          <el-button class="diggit" :plain="true" @click="thumbsUp">很赞哦！</el-button>
         </div>
         <div class="pl">
           <h2>文章评论</h2>
@@ -34,24 +35,16 @@
           <p class="saying">
             <span>
               共有
-              6条评论
+              {{articleDetail.comment}}条评论
             </span>来说两句吧...
           </p>
           <p class="yname">
             <span>姓名:</span>
-            <input
-              name="username"
-              type="text"
-              class="inputText"
-              id="username"
-              value
-              size="16"
-              placeholder="不超过10个字符"
-            />
+            <input class="inputText" size="16" placeholder="不超过16个字符" v-model="commentName" />
           </p>
 
-          <textarea name="lytext" cols="60" rows="12" id="lytext" placeholder="不超过50个字"></textarea>
-          <button class="submit">提交</button>
+          <textarea cols="60" rows="12" placeholder="不超过50个字" v-model="commentContent"></textarea>
+          <button class="submit" @click="commentBlog(articleDetail.id)">提交</button>
         </div>
       </el-col>
       <el-col :span="8">
@@ -66,13 +59,59 @@
 <script>
 import zhuanti from "@/components/zhuanti.vue";
 import recommend from "@/components/recommend.vue";
+import axios from "axios";
 import { mapState } from "vuex";
 export default {
   data() {
-    return {};
+    return {
+      commentName: "",
+      commentContent: ""
+    };
   },
-  computed: {
-    ...mapState(["articleDetail"])
+  computed: mapState({
+    articleDetail: state => state.articleDetail
+  }),
+  methods: {
+    openTags(id, tagName) {
+      this.$store.dispatch("getTagBlog", id);
+      this.$router.push({ name: "tagblog", params: { tagName } });
+    },
+    thumbsUp(id) {
+      axios.get("/api/thumbup", id).then(function(response) {
+        if (response.data.data.status == "success") {
+          this.$message({
+            message: "感谢您的支持!",
+            type: "success"
+          });
+          this.articleDetail.like = response.data.data.like;
+        } else {
+          this.$message("出了一点点小错误，请稍后再试");
+        }
+      });
+    },
+    commentBlog(id) {
+      if (this.commentName.length > 0 && this.commentContent.length > 0) {
+        axios
+          .post("/api/setarticlecomment", {
+            params: {
+              id:id,
+              data: { name: this.commentName, content: this.commentContent }
+            }
+          })
+          .then(function(response) {
+            if (response.data.status == "success") {
+              this.$message({
+                message: "提交成功",
+                type: "success"
+              });
+            }else{
+              this.$message('出了一点点小错误，请稍后再试');
+            }
+          });
+      } else {
+        this.$message.error("姓名与内容不能为空");
+      }
+    }
   },
   components: {
     zhuanti,
