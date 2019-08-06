@@ -78,7 +78,7 @@ export default {
     });
     //获取标签云
     axios.get("/api/gettags").then(function(response) {
-      // this.tags = response.data.data.tagList;
+      self.tags = response.data.data.tagList;
     });
     //获取博客
     axios.get("/api/getblogs", {
@@ -100,10 +100,7 @@ export default {
     return {
       sliderlist: [],
       blogList: [],
-      tags: [
-        { tagname: "博客", id: 1 },
-     
-      ],
+      tags: [],
       total: 0
     };
   },

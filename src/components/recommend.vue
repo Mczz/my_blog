@@ -71,14 +71,12 @@ export default {
   font-size: 15px;
   white-space: nowrap;
   text-overflow: ellipsis;
-
+  color: #fff;
+  cursor: pointer;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.7);
 }
-.tjpic p {
-  color: #fff;
-  text-decoration: none;
-}
+
 
 .sidenews {
   margin: 0 0 20px 0;

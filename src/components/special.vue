@@ -46,6 +46,8 @@ li {
   height: 200px;
   margin-bottom: 20px;
   width: 100%;
+  cursor: pointer;
+
 }
 li:hover img {
   opacity: 0.8;
