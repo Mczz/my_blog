@@ -34,8 +34,9 @@ export default {
   },
   //获取博客标题列表
   created(){
+    var self = this;
     axios.get("/api/getallblog").then(function(response) {
-      this.blogTitleList = response.data.blogTitleList;
+      self.blogTitleList = response.data.data.blogTitleList;
     });
   },
   data () {

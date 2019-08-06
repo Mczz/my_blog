@@ -15,12 +15,12 @@
           :key="index"
           @click="openBlogById(item.id)"
         >
-          <a href="#">
+        
             <i>
               <img :src="item.img" />
             </i>
             <p>{{ item.title }}</p>
-          </a>
+        
         </div>
       </el-col>
     </el-row>
@@ -68,16 +68,17 @@ import axios from "axios";
 export default {
   created() {
     //获取轮播图
+    var self = this;
     axios.get("/api/getslider").then(function(response) {
-      this.sliderlist = response.data.data.sliderlist;
+      self.sliderlist = response.data.data.sliderlist;
     });
     //获取右侧两图
     axios.get("/api/gettwoblog").then(function(response) {
-      this.twolist = response.data.data.twolist;
+      self.twolist = response.data.data.twolist;
     });
     //获取标签云
     axios.get("/api/gettags").then(function(response) {
-      this.tags = response.data.data.tagList;
+      // this.tags = response.data.data.tagList;
     });
     //获取博客
     axios.get("/api/getblogs", {
@@ -85,11 +86,11 @@ export default {
           page: 1
         }
       }).then(function(response) {
-        this.blogList = response.data.data.blogList;
+        self.blogList = response.data.data.blogList;
       });
     //获取总数
     axios.get("/api/getblogtotal").then(function(response) {
-        this.total = response.data.data.total;
+        self.total = response.data.data.total;
       });
   },
   mounted() {
@@ -97,27 +98,7 @@ export default {
   },
   data() {
     return {
-      sliderlist: [
-        {
-          img:
-            "http://www.yangqq.com/d/file/news/s/2013-07-09/82ad18fca433c2a102319063a17cfc8f.jpg",
-          id: 1
-        }
-      ],
-      twolist: [
-        {
-          img:
-            "http://www.yangqq.com/d/file/news/s/2013-07-09/82ad18fca433c2a102319063a17cfc8f.jpg",
-          id: 1,
-          title: "做一个安安静静的美男子"
-        },
-        {
-          img:
-            "http://www.yangqq.com/d/file/news/s/2013-07-09/82ad18fca433c2a102319063a17cfc8f.jpg",
-          id: 2,
-          title: "做一个安安静静的美男子"
-        }
-      ],
+      sliderlist: [],
       blogList: [],
       tags: [
         { tagname: "博客", id: 1 },
@@ -155,14 +136,15 @@ export default {
       }
     },
     handleCurrentChange(page) {
+      var self = this;
       //切换页面
-      axiosget("/api/getblogs", {
+      axios.get("/api/getblogs", {
           params: {
             page: page
           }
         })
         .then(function(response) {
-          this.blogList = response.data.blogList;
+          self.blogList = response.data.data.blogList;
         });
     }
   },

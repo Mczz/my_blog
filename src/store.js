@@ -25,7 +25,7 @@ export default new Vuex.Store({
           id: id
         }
       }).then(function (response) {
-        state.commit('setArticleDetail',response.data.article)
+        state.commit('setArticleDetail',response.data.data.article)
       })
     },
     getTagBlog(state, id) {

@@ -14,8 +14,8 @@
               <li
                 class="lmname"
                 @click="openTags(articleDetail.tagId,articleDetail.tag)"
-              >{{articleDetail.tag}}</li>
-              <li class="timer">{{ articleDetail.ctime}}</li>
+              >{{articleDetail.tagname}}</li>
+              <li class="timer">{{ dateParse(articleDetail.ctime)}}</li>
               <li class="view">
                 <span>{{ articleDetail.view }}</span>已阅读
               </li>
@@ -23,7 +23,7 @@
             </ul>
           </div>
 
-          <p class="blogtext">{{ articleDetail.text}}</p>
+          <p class="blogtext">{{ articleDetail.content}}</p>
         </div>
 
         <div class="share">
@@ -111,6 +111,13 @@ export default {
       } else {
         this.$message.error("姓名与内容不能为空");
       }
+    },
+    dateParse(time){
+        var date = new Date(time*1000);
+        var Y = date.getFullYear() + '-';
+        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        var D  = date.getDate() + ' ';
+        return Y+M+D;
     }
   },
   components: {

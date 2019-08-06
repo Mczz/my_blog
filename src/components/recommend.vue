@@ -1,44 +1,31 @@
 <template>
   <ul class="list">
-    <li v-for="(item,index) in list" :key="index" :class="{tjpic:index == 0,sidenews:index != 0}">
+    <li v-for="(item,index) in speciallist" :key="index" :class="{tjpic:index == 0,sidenews:index != 0}">
       <i>
         <img :src="item.img" @click="openBlogById(item.id)" />
       </i>
       <p @click="openBlogById(item.id)">{{item.content}}</p>
-      <span>{{item.ctime}}</span>
+      <span>{{dateParse(item.ctime)}}</span>
     </li>
   </ul>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   created() {
     //获取推荐数据
+    var self = this;
+    axios.get("/api/getspecialblog").then(function(response) {
+      self.speciallist = response.data.data.speciallist;
+    });
   },
   data() {
     return {
-      list: [
-        {
-          img:
-            "http://www.yangqq.com/d/file/news/s/2013-07-09/89b36652d1f5ba23172c7ed3dc522d8b.jpg",
-          content: "Just One Last Dance",
-          href: "#",
-          ctime: "[2018-07-15]"
-        },
-        {
-          img:
-            "http://www.yangqq.com/d/file/jstt/bj/2018-06-29/3f0b6da48a6fd4e626a021ff7bd0d74f.jpg",
-          content: "【匆匆那些年】总结个人博客经历的这四年…",
-          href: "#",
-          ctime: "[2018-07-15]"
-        },
-        {
-          img:
-            "http://www.yangqq.com/d/file/news/s/2013-07-09/89b36652d1f5ba23172c7ed3dc522d8b.jpg",
-          content: "Just One Last Dance",
-          href: "#",
-          ctime: "[2018-07-15]"
-        }
+      speciallist: [
+       
+  
       ]
     };
   },
@@ -46,6 +33,13 @@ export default {
     openBlogById(id) {
       this.$store.dispatch("getArticleDetail", id);
       this.$router.push({ name: "blogdetail" });
+    },
+    dateParse(time){
+        var date = new Date(time*1000);
+        var Y = date.getFullYear() + '-';
+        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        var D  = date.getDate() + ' ';
+        return Y+M+D;
     }
   }
 };
@@ -81,7 +75,7 @@ export default {
   overflow: hidden;
   background: rgba(0, 0, 0, 0.7);
 }
-.tjpic p a {
+.tjpic p {
   color: #fff;
   text-decoration: none;
 }

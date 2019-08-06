@@ -1,13 +1,13 @@
 <template>
   <ul class="list">
-    <li v-for="(item,index) in list" :key="index">
+    <li v-for="(item,index) in speciallist" :key="index">
       <i>
         <img :src="item.img" />
       </i>
       <p>
-        {{item.content}}
-        <span>
-          <a :href="item.href" :title="item.content" target="_blank">阅读</a>
+        {{item.title}}
+        <span @click="openBlogById(item.id)">
+          阅读
         </span>
       </p>
     </li>
@@ -15,33 +15,27 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   created() {
     //获取特别推荐数据
+    var self = this;
+    axios.get("/api/getspecialblog").then(function(response) {
+      self.speciallist = response.data.data.speciallist;
+    });
   },
   data() {
     return {
-      list: [
-        {
-          img:
-            "http://www.yangqq.com/d/file/news/s/2013-07-09/89b36652d1f5ba23172c7ed3dc522d8b.jpg",
-          content: "Just One Last Dance",
-          href: "#"
-        },
-        {
-          img:
-            "http://www.yangqq.com/d/file/news/s/2013-07-09/89b36652d1f5ba23172c7ed3dc522d8b.jpg",
-          content: "Just One Last Dance",
-          href: "#"
-        },
-        {
-          img:
-            "http://www.yangqq.com/d/file/news/s/2013-07-09/89b36652d1f5ba23172c7ed3dc522d8b.jpg",
-          content: "Just One Last Dance",
-          href: "#"
-        }
-      ]
+      speciallist: []
     };
+  },
+  methods:{
+    openBlogById(id) {
+      this.$store.dispatch("getArticleDetail", id);
+      this.$router.push({ name: "blogdetail" });
+    }
+    
   }
 };
 </script>
@@ -56,11 +50,12 @@ li {
 li:hover img {
   opacity: 0.8;
 }
-li:hover a {
+li:hover span {
   color: #000;
 }
 li:hover span {
   background: #fff;
+  opacity: 0.8;
 }
 i {
   width: 100%;
@@ -98,9 +93,7 @@ span {
   display: block;
   clear: both;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
-a {
-  color: #ffffff;
-  text-decoration: none;
-}
+
 </style>
