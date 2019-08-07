@@ -1,8 +1,8 @@
 <template>
   <div class="lmsg">
     <el-row class="title">
-      <span class="n1"></span>
-      <span class="n2">时间最会骗人，但也能让你明白，这个世界没有什么不能失去的，离去的都是风景，留下的才是人生，走到最后的，就是对的人。</span>
+      <span class="n1">xxx文章评论</span>
+      <span class="n2">共1条评论</span>
     </el-row>
     <el-row :gutter="40">
       <el-col class="liuyanbox" :span="16">

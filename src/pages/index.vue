@@ -15,12 +15,10 @@
           :key="index"
           @click="openBlogById(item.id)"
         >
-        
-            <i>
-              <img :src="item.img" />
-            </i>
-            <p>{{ item.title }}</p>
-        
+          <i>
+            <img :src="item.img" />
+          </i>
+          <p>{{ item.title }}</p>
         </div>
       </el-col>
     </el-row>
@@ -81,27 +79,101 @@ export default {
       self.tags = response.data.data.tagList;
     });
     //获取博客
-    axios.get("/api/getblogs", {
+    axios
+      .get("/api/getblogs", {
         params: {
           page: 1
         }
-      }).then(function(response) {
+      })
+      .then(function(response) {
         self.blogList = response.data.data.blogList;
       });
     //获取总数
     axios.get("/api/getblogtotal").then(function(response) {
-        self.total = response.data.data.total;
-      });
+      self.total = response.data.data.total;
+    });
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
   },
   data() {
     return {
-      sliderlist: [],
-      blogList: [],
-      tags: [],
-      total: 0
+      sliderlist: [
+        {
+          title: "",
+          text:
+            "四年的时间，学习专业课程，临近毕业恨不能找个简单轻松的工作远离编程，可是微薄的工资跟专业相比，找个专业的工作工资能高好几倍。好不容易找到个跟专业符合的工作，五年...",
+          ctime: "2018-07-15",
+          tag: "慢生活",
+          view: 7,
+          like: 1,
+          img:
+            "http://img1.imgtn.bdimg.com/it/u=1931157584,2026440929&fm=26&gp=0.jpg",
+          id: 1
+        }
+      ],
+      blogList: [{
+          title: "服务器尚未备案完成",
+          content:
+            "由于服务器尚未备案完成，数据库数据还没建立，故无页面数据可加载，暂时只有本地数据可用于展示，还请谅解",
+          ctime: 1552222222,
+          view: 7,
+          like: 1,
+          img:
+            "http://img1.imgtn.bdimg.com/it/u=1931157584,2026440929&fm=26&gp=0.jpg",
+          id: 1,
+          tagname:"测试"
+        },{
+          title: "服务器尚未备案完成",
+          content:
+            "由于服务器尚未备案完成，数据库数据无法建立，故无法加载页面数据，暂时只有本地数据，还请谅解",
+          ctime: 1552222222,
+          view: 7,
+          like: 1,
+          img:
+            "http://img1.imgtn.bdimg.com/it/u=1931157584,2026440929&fm=26&gp=0.jpg",
+          id: 1,
+          tagname:"测试"
+        },{
+          title: "服务器尚未备案完成",
+          content:
+            "由于服务器尚未备案完成，数据库数据无法建立，故无法加载页面数据，暂时只有本地数据，还请谅解",
+          ctime: 1552222222,
+          view: 7,
+          like: 1,
+          img:
+            "http://img1.imgtn.bdimg.com/it/u=1931157584,2026440929&fm=26&gp=0.jpg",
+          id: 1,
+          tagname:"测试"
+        }
+        ],
+      tags: [{tagname:'测试',id:'1'}],
+      total: 2,
+      twolist:[
+        {
+          title: "由于服务器尚未备案完成，数据库数据无法建立，故无法加载页面数据，暂时只有本数据，还请谅解",
+          text:
+            "四年的时间，学习专业课程，临近毕业恨不能找个简单轻松的工作远离编程，可是微薄的工资跟专业相比，找个专业的工作工资能高好几倍。好不容易找到个跟专业符合的工作，五年...",
+          ctime: "2018-07-15",
+          tag: "慢生活",
+          view: 7,
+          like: 1,
+          img:
+            "http://img1.imgtn.bdimg.com/it/u=1931157584,2026440929&fm=26&gp=0.jpg",
+          id: 1
+        },{
+          title: "由于服务器尚未备案完成，故无法加载页面数据，还请谅解",
+          text:
+            "四年的时间，学习专业课程，临近毕业恨不能找个简单轻松的工作远离编程，可是微薄的工资跟专业相比，找个专业的工作工资能高好几倍。好不容易找到个跟专业符合的工作，五年...",
+          ctime: "2018-07-15",
+          tag: "慢生活",
+          view: 7,
+          like: 1,
+          img:
+            "http://img1.imgtn.bdimg.com/it/u=1931157584,2026440929&fm=26&gp=0.jpg",
+          id: 1
+        }
+      ]
     };
   },
   computed: {
@@ -135,7 +207,8 @@ export default {
     handleCurrentChange(page) {
       var self = this;
       //切换页面
-      axios.get("/api/getblogs", {
+      axios
+        .get("/api/getblogs", {
           params: {
             page: page
           }

@@ -33,10 +33,10 @@
           <h2>文章评论</h2>
 
           <p class="saying">
-            <span>
+            <a href="/articleComment">
               共有
               {{articleDetail.comment}}条评论
-            </span>来说两句吧...
+            </a>来说两句吧...
           </p>
           <p class="yname">
             <span>姓名:</span>

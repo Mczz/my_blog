@@ -49,6 +49,11 @@ export default new Router({
           path: '/alllmsg',
           name: 'alllmsg',
           component: () => import( './pages/alllmsg.vue')
+        },
+        {
+          path: '/articleComment',
+          name: 'articleComment',
+          component: () => import( './pages/articleComment.vue')
         }
     //   ]
     // }
