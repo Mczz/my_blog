@@ -34,7 +34,7 @@ export default new Vuex.Store({
           id: id
         }
       }).then(function (response) {
-        state.commit('setArticleDetail',response.data.article)
+        state.commit('settagblog',response.data.tag.tagBlogList)
       })
     }
   }

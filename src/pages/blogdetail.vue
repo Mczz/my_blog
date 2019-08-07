@@ -40,10 +40,19 @@
           </p>
           <p class="yname">
             <span>姓名:</span>
-            <input class="inputText" size="16" placeholder="不超过16个字符" v-model="commentName" />
+            <input class="inputText"  placeholder="不超过16个字符" v-model="commentName" />
           </p>
-
+          <p class="yname">
+            <span>邮箱:</span>
+            <input class="inputText"  placeholder="不超过50个字符" v-model="commentEmail" />
+          </p>
+          
           <textarea cols="60" rows="12" placeholder="不超过50个字" v-model="commentContent"></textarea>
+          <p class="yname">
+            <span>验证码:</span>
+            <input class="inputText" placeholder="请输入验证码" v-model="mycode" />
+            <span v-html='vcode' @click="changeCode()"></span>
+          </p>
           <button class="submit" @click="commentBlog(articleDetail.id)">提交</button>
         </div>
       </el-col>
@@ -62,10 +71,20 @@ import recommend from "@/components/recommend.vue";
 import axios from "axios";
 import { mapState } from "vuex";
 export default {
+  created(){
+    axios.get('/api/queryRandomCode').then((data)=>{
+      this.vcode = data.data.data;
+      this.rightCode = data.data.text;
+    })
+  },
   data() {
     return {
       commentName: "",
-      commentContent: ""
+      commentContent: "",
+      commentEmail:"",
+      rightCode:"",
+      vcode:'',
+      mycode:''
     };
   },
   computed: mapState({
@@ -89,15 +108,20 @@ export default {
         }
       });
     },
+    changeCode(){
+      axios.get('/api/queryRandomCode').then((data)=>{
+      this.vcode = data.data.data;
+      this.rightCode = data.data.text;
+
+    })
+    },
     commentBlog(id) {
+      if(this.rightCode != this.mycode){
+        this.$message.error("验证码不正确");
+        return
+      }
       if (this.commentName.length > 0 && this.commentContent.length > 0) {
-        axios
-          .post("/api/setarticlecomment", {
-            params: {
-              id:id,
-              data: { name: this.commentName, content: this.commentContent }
-            }
-          })
+        axios.get("/api/addcomment" + `?id=${id}&parent=-1&name=${this.name}&email=${this.commentEmail}&content=${this.commentContent}`)
           .then(function(response) {
             if (response.data.status == "success") {
               this.$message({

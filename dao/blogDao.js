@@ -98,6 +98,19 @@ function getBlogById(id,success){
     })
     connection.end();
 }
+function getTagBlog(id,success){
+    var querySql = "select * from blog where tagid=?";
+    var params = [id];
+    var connection = dbutil.createConnection();
+    connection.query(querySql,params,function(error,result){
+        if(error == null){   
+            success(result)
+        }else{
+            console.log(error)
+        }
+    })
+    connection.end();
+}
 function getSpecialBlog(success){
     var querySql = "select img,id,ctime,content,title from blog order by `view`desc limit 0,3";
     var params = [];
@@ -120,3 +133,4 @@ module.exports.getTwoBlog = getTwoBlog;
 module.exports.getAllBlog = getAllBlog;
 module.exports.getBlogById = getBlogById;
 module.exports.getSpecialBlog = getSpecialBlog;
+module.exports.getTagBlog = getTagBlog;

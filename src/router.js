@@ -44,6 +44,11 @@ export default new Router({
           path: '/tagblog',
           name: 'tagblog',
           component: () => import( './pages/tagblog.vue')
+        },
+        {
+          path: '/alllmsg',
+          name: 'alllmsg',
+          component: () => import( './pages/alllmsg.vue')
         }
     //   ]
     // }

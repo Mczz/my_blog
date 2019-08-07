@@ -27,6 +27,14 @@ app.get('/api/getblogbyid',loader.get('/api/getblogbyid'));
 //获取推荐博客
 app.get('/api/getspecialblog',loader.get('/api/getspecialblog'));
 
+//根据tag获取博客列表
+app.get('/api/gettagblog',loader.get('/api/gettagblog'));
+
+//添加评论
+app.get('/api/addcomment',loader.get('/api/addcomment'));
+//验证码
+app.get('/api/queryRandomCode',loader.get('/api/queryRandomCode'));
+
 
 
 
