@@ -45,16 +45,16 @@ export default new Router({
           name: 'tagblog',
           component: () => import( './pages/tagblog.vue')
         },
-        {
-          path: '/alllmsg',
-          name: 'alllmsg',
-          component: () => import( './pages/alllmsg.vue')
-        },
-        {
-          path: '/articleComment',
-          name: 'articleComment',
-          component: () => import( './pages/articleComment.vue')
-        }
+        // {
+        //   path: '/alllmsg',
+        //   name: 'alllmsg',
+        //   component: () => import( './pages/alllmsg.vue')
+        // },
+        // {
+        //   path: '/articleComment',
+        //   name: 'articleComment',
+        //   component: () => import( './pages/articleComment.vue')
+        // }
     //   ]
     // }
     // {

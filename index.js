@@ -35,6 +35,11 @@ app.get('/api/addcomment',loader.get('/api/addcomment'));
 //验证码
 app.get('/api/queryRandomCode',loader.get('/api/queryRandomCode'));
 
+//根据blog id查找评论
+app.get('/api/queryCommentsByBlogId',loader.get('/api/queryCommentsByBlogId'));
+//点赞接口
+app.get('/api/thumbup',loader.get('/api/thumbup'));
+
 
 
 

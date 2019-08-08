@@ -7,7 +7,7 @@ var path = new Map();
 
 function addComment(request,response){
     var params = url.parse(request.url,true).query;
-    commentDao.insertComment(parseInt(params.id),parseInt(params.parent),params.name,params.content,params.email,timeUtil.getNow(), timeUtil.getNow(),function (result) {
+    commentDao.insertComment(parseInt(params.id),parseInt(params.parent),params.parent_name,params.name,params.content,params.email,timeUtil.getNow(), timeUtil.getNow(),function (result) {
         
         response.writeHead(200,{'Content-Type':'text/html;charset=UTF8'});
         response.write(respUtil.writeResult('success', '添加成功', null));
@@ -21,10 +21,19 @@ function queryRandomCode(request,response){
     response.write(JSON.stringify(img));
     response.end();
 }
-
+function queryCommentsByBlogId(request,response){
+    var params = url.parse(request.url,true).query;
+    commentDao.queryCommentsByBlogId(parseInt(params.blog_id),function(result){
+        response.writeHead(200,{'Content-Type':'text/html;charset=UTF8'});
+        response.write(respUtil.writeResult('success', '添加成功', result));
+        response.end();
+    });
+        
+}
 
 
 
 path.set('/api/addcomment', addComment);
 path.set('/api/queryRandomCode', queryRandomCode);
+path.set('/api/queryCommentsByBlogId', queryCommentsByBlogId);
 module.exports.path = path;

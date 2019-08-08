@@ -13,7 +13,7 @@
               <li class="author"></li>
               <li
                 class="lmname"
-                @click="openTags(articleDetail.tagId,articleDetail.tag)"
+                @click="openTags(articleDetail.tagId)"
               >{{articleDetail.tagname}}</li>
               <li class="timer">{{ dateParse(articleDetail.ctime)}}</li>
               <li class="view">
@@ -27,33 +27,47 @@
         </div>
 
         <div class="share">
-          <el-button class="diggit" :plain="true" @click="thumbsUp">很赞哦！</el-button>
+          <el-button class="diggit" :plain="true" @click="thumbsUp(articleDetail.id)">很赞哦！</el-button>
         </div>
         <div class="pl">
           <h2>文章评论</h2>
 
           <p class="saying">
-            <a href="/articleComment">
+            <span>
               共有
-              {{articleDetail.comment}}条评论
-            </a>来说两句吧...
+              {{commentList.length}}条评论
+            </span>来说两句吧...
           </p>
-          <p class="yname">
+          <p class="fb" v-for="(item,index) in commentList" :key="item.id + index">
+            <ul>
+              <p class="fbtime" >
+                <span>
+                  发表于&nbsp;{{dateParseSec(item.ctime)}}
+                  <i class="reply" @click="replyFunc(item.id,item.username)">回复</i>
+                </span>
+                {{item.username}}:&nbsp;{{item.options}}
+              </p>
+              <p class="fbinfo">{{item.comments}}</p>
+            </ul>
+          </p>
+          <p class="yname" >
             <span>姓名:</span>
-            <input class="inputText"  placeholder="不超过16个字符" v-model="commentName" />
+            <input class="inputText" placeholder="不超过16个字符" v-model="commentName" />
+            <input type="hidden" v-model="reply" />
+            <input type="hidden" v-model="replyname" />
           </p>
           <p class="yname">
             <span>邮箱:</span>
-            <input class="inputText"  placeholder="不超过50个字符" v-model="commentEmail" />
+            <input class="inputText" placeholder="不超过50个字符" v-model="commentEmail" />
           </p>
-          
+
           <textarea cols="60" rows="12" placeholder="不超过50个字" v-model="commentContent"></textarea>
           <p class="yname">
             <span>验证码:</span>
-            <input class="inputText" placeholder="请输入验证码" v-model="mycode" />
-            <span v-html='vcode' @click="changeCode()"></span>
+            <input class="inputText" placeholder="请输入验证码" v-model="mycode" ref='send_comment'/>
+            <span v-html="vcode" @click="changeCode()"></span>
           </p>
-          <button class="submit" @click="commentBlog(articleDetail.id)">提交</button>
+          <button class="submit" @click="commentBlog(articleDetail.id)" >提交</button>
         </div>
       </el-col>
       <el-col :span="8">
@@ -69,84 +83,149 @@
 import zhuanti from "@/components/zhuanti.vue";
 import recommend from "@/components/recommend.vue";
 import axios from "axios";
-import { mapState } from "vuex";
+
 export default {
-  created(){
-    axios.get('/api/queryRandomCode').then((data)=>{
+  created() {
+
+     //在页面加载时读取localStorage里的状态信息
+    localStorage.getItem("userMsg") && this.$store.replaceState(Object.assign(this.$store.state,JSON.parse(localStorage.getItem("userMsg"))));
+    
+    //在页面刷新时将vuex里的信息保存到localStorage里
+    window.addEventListener("beforeunload",()=>{
+        localStorage.setItem("userMsg",JSON.stringify(this.$store.state))
+    })
+    //保存页面id信息
+    this.id = this.$route.params.blogid || this.$store.state.blogid;
+    if(this.$route.params.blogid){
+      this.$store.commit('setBlogId',this.$route.params.blogid)
+    }
+
+
+    axios.get("/api/queryRandomCode").then(data => {
       this.vcode = data.data.data;
       this.rightCode = data.data.text;
-    })
+    });
+    axios
+      .get("/api/getblogbyid", {
+        params: {
+          id: this.id
+        }
+      })
+      .then(res => {
+        this.articleDetail = res.data.data.article;
+      });
+    axios.get('/api/queryCommentsByBlogId',{
+        params: {
+          blog_id: this.id
+        }
+      }).then((res) => {
+        this.commentList = res.data.data;
+        for (var i=0;i<this.commentList.length;i++){
+          if(this.commentList[i].parent > -1){
+            this.commentList[i].options = '回复@' + this.commentList[i].parent_name
+          }
+        }
+      })
   },
   data() {
     return {
       commentName: "",
       commentContent: "",
-      commentEmail:"",
-      rightCode:"",
-      vcode:'',
-      mycode:''
+      commentEmail: "",
+      rightCode: "",
+      commentList: [],
+      vcode: "",
+      mycode: "",
+      id: 1,
+      articleDetail: {
+      },
+      reply: "-1",
+      replyname: "0"
     };
   },
-  computed: mapState({
-    articleDetail: state => state.articleDetail
-  }),
+ 
+
   methods: {
-    openTags(id, tagName) {
+    openTags(id) {
       this.$store.dispatch("getTagBlog", id);
-      this.$router.push({ name: "tagblog", params: { tagName } });
+      this.$router.push({ name: "tagblog", params: { id } });
     },
     thumbsUp(id) {
-      axios.get("/api/thumbup", id).then(function(response) {
+      axios.get(`/api/thumbup?id=${id}`).then(function(response) {
         if (response.data.data.status == "success") {
           this.$message({
             message: "感谢您的支持!",
             type: "success"
           });
-          this.articleDetail.like = response.data.data.like;
         } else {
           this.$message("出了一点点小错误，请稍后再试");
         }
       });
     },
-    changeCode(){
-      axios.get('/api/queryRandomCode').then((data)=>{
-      this.vcode = data.data.data;
-      this.rightCode = data.data.text;
-
-    })
+     replyFunc:function(commentId,username){
+        this.reply = commentId;
+        this.replyname = username;
+        let anchor = this.$refs.send_comment;
+        scrollTo(0,anchor.offsetTop)
+      }
+    ,
+    changeCode() {
+      axios.get("/api/queryRandomCode").then(data => {
+        this.vcode = data.data.data;
+        this.rightCode = data.data.text;
+      });
     },
     commentBlog(id) {
-      if(this.rightCode != this.mycode){
+      if (this.rightCode != this.mycode) {
         this.$message.error("验证码不正确");
-        return
+        return;
       }
       if (this.commentName.length > 0 && this.commentContent.length > 0) {
-        axios.get("/api/addcomment" + `?id=${id}&parent=-1&name=${this.name}&email=${this.commentEmail}&content=${this.commentContent}`)
-          .then(function(response) {
+        axios
+          .get(
+            "/api/addcomment" +
+              `?id=${id}&parent=${this.reply}&parent_name=${this.replyname}&name=${this.commentName}&email=${this.commentEmail}&content=${this.commentContent}`
+          )
+          .then((response) => {
             if (response.data.status == "success") {
               this.$message({
                 message: "提交成功",
                 type: "success"
               });
-            }else{
-              this.$message('出了一点点小错误，请稍后再试');
+              this.replyname ='0';
+              this.reply = '-1';
+            } else {
+              this.$message("出了一点点小错误，请稍后再试");
             }
           });
       } else {
         this.$message.error("姓名与内容不能为空");
       }
     },
-    dateParse(time){
+    dateParse(time) {
+      var date = new Date(time * 1000);
+      var Y = date.getFullYear() + "-";
+      var M =
+        (date.getMonth() + 1 < 10
+          ? "0" + (date.getMonth() + 1)
+          : date.getMonth() + 1) + "-";
+      var D = date.getDate() + " ";
+      return Y + M + D;
+    },
+    dateParseSec(time){
         var date = new Date(time*1000);
         var Y = date.getFullYear() + '-';
         var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-        var D  = date.getDate() + ' ';
-        return Y+M+D;
+        var D  = (date.getDate() < 10 ? '0'+ date.getDate(): date.getDate()) + ' ';
+        var h  = date.getHours() + ':';
+        var m  = (date.getMinutes()< 10 ? '0'+ date.getMinutes(): date.getMinutes()) + ':';
+        var s  = (date.getSeconds()< 10 ? '0'+ date.getSeconds(): date.getSeconds());
+        return Y+M+D+h+m+s;
     }
   },
   components: {
     zhuanti,
-    recommend
+    recommend,
   }
 };
 </script>

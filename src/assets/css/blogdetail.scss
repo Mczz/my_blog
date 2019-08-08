@@ -136,13 +136,46 @@
                 span {
                     float: right;
                     color: #3a6ab5;
-                    cursor: pointer;
                 }
                 a {
                     float: right;
                     color: #3a6ab5;
-                    cursor: pointer;
                 }
+            }
+            .fb{
+                ul {
+                    background: url(../assets/images/tx9.jpg) no-repeat top 13px left 0px;
+                    margin: 10px 10px;
+                    padding: 10px 40px 10px 70px;
+                    border-bottom: #ececec 1px solid;
+                    font-size: 16px;
+                  }
+                  .fbtime {
+                    color: #000;
+                    margin-bottom: 10px;
+                    line-height: 1.8;
+                    font-size: 16px;
+                  }
+
+                  .fbtime span {
+                    float: right;
+                    color: #999;
+                    font-size: 12px;
+                  }
+                  .fbinfo {
+                    color: #555;
+                    font-size: 14px;
+                  }
+                  .zzhf{
+                      margin-top: 10px;
+                      padding: 10px;
+                      background: #f9f9f9;
+                  }
+                  .reply{
+                    margin-left: 10px;
+                    cursor: pointer;
+                    color: #3a6ab5;
+                  }
             }
 
             .yname {

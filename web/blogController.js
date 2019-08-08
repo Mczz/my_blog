@@ -102,13 +102,25 @@ function getSpecialBlog(request, response) {
 
 function getTagBlog(request, response) {
     var params = url.parse(request.url,true).query;
-    blogDao.getTagBlog(params.id,function (result) {
+    var page = parseInt(params.page) - 1;
+    blogDao.getTagBlog(parseInt(params.id),page,10,function (result) {
         //处理查询结果
         var data = {
             tagBlogList:result
         };
         response.writeHead(200,{'Content-Type':'text/html;charset=UTF8'});
         response.write(respUtil.writeResult('success', '添加成功', data));
+        response.end();
+    })
+}
+
+function thumbup(request, response) {
+    var params = url.parse(request.url,true).query;
+    blogDao.thumbup(parseInt(params.id),function (result) {
+        //处理查询结果
+        
+        response.writeHead(200,{'Content-Type':'text/html;charset=UTF8'});
+        response.write(respUtil.writeResult('success', '添加成功', null));
         response.end();
     })
 }
@@ -122,4 +134,5 @@ path.set('/api/getallblog', getAllBlog);
 path.set('/api/getblogbyid', getBlogById);
 path.set('/api/getspecialblog', getSpecialBlog);
 path.set('/api/gettagblog', getTagBlog);
+path.set('/api/thumbup', thumbup);
 module.exports.path = path;

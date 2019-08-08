@@ -13,7 +13,7 @@
     <div class="bloginfo">
       <ul>
         <li class="author"></li>
-        <li class="lmname" @click="openTags(blog.tagId,blog.tagname)">
+        <li class="lmname" @click="openTags(blog.tagId)">
           {{ blog.tagname}}
         </li>
         <li class="timer">{{ dateParse(blog.ctime)}}</li>
@@ -31,12 +31,13 @@ export default {
   props: ["blog"],
   methods: {
     openBlogById(id) {
-      this.$store.dispatch("getArticleDetail", id);
-      this.$router.push({ name: "blogdetail" });
+      this.$router.push({ name: "blogdetail",params:{
+        blogid:id
+      } });
     },
-    openTags(id,tagName){
+    openTags(id){
       this.$store.dispatch("getTagBlog", id);
-      this.$router.push({ name: "tagblog",params:{tagName}})
+      this.$router.push({ name: "tagblog",params:{id}})
     },
     dateParse(time){
         var date = new Date(time*1000);

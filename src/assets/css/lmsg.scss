@@ -29,14 +29,95 @@
     .liuyanbox {
         background: #fff;
         margin-top: 20px;
-        .morelmsg {
+        .pl {
             margin-left: 20px;
-            cursor: pointer;
-            a {
+
+            h2 {
+                background: url(../assets/images/newsbg.png) no-repeat left 10px center;
+                border-bottom: #000 2px solid;
+                line-height: 40px;
                 font-size: 14px;
+                padding-left: 30px;
                 color: #000;
             }
+
+            .saying {
+                line-height: 30px;
+                color: #a9a6a6;
+                font-size: 15px;
+
+                span {
+                    float: right;
+                    color: #3a6ab5;
+                }
+                a {
+                    float: right;
+                    color: #3a6ab5;
+                }
+            }
+            .fb{
+                ul {
+                    background: url(../assets/images/tx9.jpg) no-repeat top 13px left 0px;
+                    margin: 10px 10px;
+                    padding: 10px 40px 10px 70px;
+                    border-bottom: #ececec 1px solid;
+                    font-size: 16px;
+                  }
+                  .fbtime {
+                    color: #000;
+                    margin-bottom: 10px;
+                    line-height: 1.8;
+                    font-size: 16px;
+                  }
+
+                  .fbtime span {
+                    float: right;
+                    color: #999;
+                    font-size: 12px;
+                  }
+                  .fbinfo {
+                    color: #555;
+                    font-size: 14px;
+                  }
+                  .zzhf{
+                      margin-top: 10px;
+                      padding: 10px;
+                      background: #f9f9f9;
+                  }
+                  .reply{
+                    margin-left: 10px;
+                    cursor: pointer;
+                    color: #3a6ab5;
+                  }
+            }
+
+            .yname {
+                margin: 10px 10px 10px 0;
+                font-size: 15px;
+
+                span {
+                    padding-right: 10px;
+                }
+            }
+
+            textarea {
+                width: 100%;
+            }
+
+            .submit {
+                display: block;
+                background: #303030;
+                color: #fff;
+                border: 0;
+                line-height: 30px;
+                padding: 0 20px;
+                border-radius: 5px;
+                float: right;
+                cursor: pointer;
+                margin-bottom: 20px;
+            }
         }
+        
        
     }
 }

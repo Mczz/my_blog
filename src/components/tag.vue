@@ -1,15 +1,15 @@
 <template>
 
-    <p @click="openTags(taginfo.id,taginfo.tagname)">{{taginfo.tagname}}</p>
+    <p @click="openTags(taginfo.id)">{{taginfo.tagname}}</p>
 </template>
 
 <script>
 export default {
     props:['taginfo'],
     methods:{
-        openTags(id,tagname){
+        openTags(id){
             this.$store.dispatch("getTagBlog", id);
-            this.$router.push({ name: "tagblog",params:{tagname} })
+            this.$router.push({ name: "tagblog",params:{id} })
         }
     }
 }

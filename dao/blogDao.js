@@ -97,10 +97,19 @@ function getBlogById(id,success){
         }
     })
     connection.end();
+    var querySql2 = "update blog set `view` = `view`+1 where id = " +id;
+    var params2 = [id];
+    var connection2 = dbutil.createConnection();
+    connection2.query(querySql2,params2,function(error,result){
+        
+    })
+    connection2.end();
+    
+
 }
-function getTagBlog(id,success){
-    var querySql = "select * from blog where tagid=?";
-    var params = [id];
+function getTagBlog(id,page,pageSize,success){
+    var querySql = "select * from blog where tagId="+ id +" limit ?,?";
+    var params = [page,pageSize];
     var connection = dbutil.createConnection();
     connection.query(querySql,params,function(error,result){
         if(error == null){   
@@ -124,7 +133,19 @@ function getSpecialBlog(success){
     })
     connection.end();
 }
-
+function thumbup(id,success){
+    var querySql = "update blog set `like` = `like`+1 where id = " +id;
+    var params = [];
+    var connection = dbutil.createConnection();
+    connection.query(querySql,params,function(error,result){
+        if(error == null){   
+            success(result)
+        }else{
+            console.log(error)
+        }
+    })
+    connection.end();
+}
 module.exports.insertBlog = insertBlog;
 module.exports.getBlogList = getBlogList;
 module.exports.getBlogTotal = getBlogTotal;
@@ -134,3 +155,4 @@ module.exports.getAllBlog = getAllBlog;
 module.exports.getBlogById = getBlogById;
 module.exports.getSpecialBlog = getSpecialBlog;
 module.exports.getTagBlog = getTagBlog;
+module.exports.thumbup = thumbup;
