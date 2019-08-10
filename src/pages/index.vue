@@ -109,7 +109,8 @@ export default {
           like: 1,
           img:
             "http://img1.imgtn.bdimg.com/it/u=1931157584,2026440929&fm=26&gp=0.jpg",
-          id: 1
+          id: 1,
+          tagId:1,
         }
       ],
       blogList: [{
@@ -122,7 +123,8 @@ export default {
           img:
             "http://img1.imgtn.bdimg.com/it/u=1931157584,2026440929&fm=26&gp=0.jpg",
           id: 1,
-          tagname:"测试"
+          tagname:"测试",
+          tagId:1
         },{
           title: "服务器尚未备案完成",
           content:
@@ -160,7 +162,8 @@ export default {
           like: 1,
           img:
             "http://img1.imgtn.bdimg.com/it/u=1931157584,2026440929&fm=26&gp=0.jpg",
-          id: 1
+          id: 1,
+          tagId:1
         },{
           title: "由于服务器尚未备案完成，故无法加载页面数据，还请谅解",
           text:
@@ -171,7 +174,8 @@ export default {
           like: 1,
           img:
             "http://img1.imgtn.bdimg.com/it/u=1931157584,2026440929&fm=26&gp=0.jpg",
-          id: 1
+          id: 1,
+          tagId:2
         }
       ]
     };
@@ -188,9 +192,7 @@ export default {
   },
   methods: {
     openBlogById(id) {
-      this.$router.push({ name: "blogdetail",params:{
-        blogid:id
-      } });
+      this.$router.push(`/blogdetail/${id}`);
     },
     //我的信息固定方法
     handleScroll() {

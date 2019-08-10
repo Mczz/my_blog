@@ -65,9 +65,7 @@ export default {
       }
     },
     openBlogById(id) {
-      this.$router.push({ name: "blogdetail",params:{
-        blogid:id
-      } });
+      this.$router.push(`/blogdetail/${id}`);      
     },
   }
 };

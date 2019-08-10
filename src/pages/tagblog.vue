@@ -27,7 +27,7 @@ import zhuanti from "@/components/zhuanti.vue";
 import guanzhu from "@/components/guanzhu.vue";
 import blog from "@/components/blog.vue";
 import special from "@/components/special.vue";
-import {mapState} from "vuex";
+import axios from 'axios';
 
 export default {
   components: {
@@ -37,23 +37,36 @@ export default {
     blog
   },
   created(){
-     //在页面加载时读取localStorage里的状态信息
-    localStorage.getItem("userMsg") && this.$store.replaceState(Object.assign(this.$store.state,JSON.parse(localStorage.getItem("userMsg"))));
-    
-    //在页面刷新时将vuex里的信息保存到localStorage里
-    window.addEventListener("beforeunload",()=>{
-        localStorage.setItem("userMsg",JSON.stringify(this.$store.state))
+    this.id = this.$route.params.id;
+
+    axios.get('/api/gettagblog',{
+      params: {
+        id: this.id,
+        page:1
+      }
+    }).then(function (response) {
+      this.tagBlogList = response.data.data.tagBlogList;
     })
-    this.id = this.$route.params.blogid ||this.$store.state.tagBlogList[0].tagId;
+
   },
   data() {
     return {
-      id:1
+      id:1,
+      tagBlogList:[{
+      title: "服务器尚未备案完成",
+      content:
+        "由于服务器尚未备案完成，数据库数据无法建立，故无法加载页面数据，暂时只有本地数据，还请谅解",
+      ctime: 1552222222,
+      view: 7,
+      like: 1,
+      img:
+        "http://img1.imgtn.bdimg.com/it/u=1931157584,2026440929&fm=26&gp=0.jpg",
+      id: 1,
+      tagname:"测试"
+    }]
     };
   },
-  computed:{
-    ...mapState(['tagBlogList'])
-  },
+
   methods: {
     handleScroll() {
       var scrollTop =

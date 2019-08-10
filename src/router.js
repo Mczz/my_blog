@@ -36,12 +36,12 @@ export default new Router({
           component: () => import( './pages/allblog.vue')
         },
         {
-          path: '/blogdetail',
+          path: '/blogdetail/:id',
           name: 'blogdetail',
           component: () => import( './pages/blogdetail.vue')
         },
         {
-          path: '/tagblog',
+          path: '/tagblog/:id',
           name: 'tagblog',
           component: () => import( './pages/tagblog.vue')
         },

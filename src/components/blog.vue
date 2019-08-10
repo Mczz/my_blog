@@ -31,13 +31,10 @@ export default {
   props: ["blog"],
   methods: {
     openBlogById(id) {
-      this.$router.push({ name: "blogdetail",params:{
-        blogid:id
-      } });
+      this.$router.push(`/blogdetail/${id}`);
     },
     openTags(id){
-      this.$store.dispatch("getTagBlog", id);
-      this.$router.push({ name: "tagblog",params:{id}})
+      this.$router.push(`tagblog/${id}`);
     },
     dateParse(time){
         var date = new Date(time*1000);

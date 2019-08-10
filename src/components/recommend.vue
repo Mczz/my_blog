@@ -53,9 +53,7 @@ export default {
   },
   methods: {
     openBlogById(id) {
-      this.$router.push({ name: "blogdetail",params:{
-        blogid:id
-      } });
+        this.$router.push(`/blogdetail/${id}`);
     },
     dateParse(time){
         var date = new Date(time*1000);

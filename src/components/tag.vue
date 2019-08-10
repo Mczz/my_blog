@@ -8,8 +8,7 @@ export default {
     props:['taginfo'],
     methods:{
         openTags(id){
-            this.$store.dispatch("getTagBlog", id);
-            this.$router.push({ name: "tagblog",params:{id} })
+            this.$router.push(`tagblog/${id}`);
         }
     }
 }
