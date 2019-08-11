@@ -1,6 +1,6 @@
 <template>
 
-    <p @click="openTags(taginfo.id)">{{taginfo.tagname}}</p>
+    <p @click="openTags(taginfo.tagId)">{{taginfo.tagname}}</p>
 </template>
 
 <script>

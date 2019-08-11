@@ -44,7 +44,7 @@ export default {
         id: this.id,
         page:1
       }
-    }).then(function (response) {
+    }).then(response => {
       this.tagBlogList = response.data.data.tagBlogList;
     })
 

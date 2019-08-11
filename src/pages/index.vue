@@ -98,58 +98,9 @@ export default {
   },
   data() {
     return {
-      sliderlist: [
-        {
-          title: "",
-          text:
-            "四年的时间，学习专业课程，临近毕业恨不能找个简单轻松的工作远离编程，可是微薄的工资跟专业相比，找个专业的工作工资能高好几倍。好不容易找到个跟专业符合的工作，五年...",
-          ctime: "2018-07-15",
-          tag: "慢生活",
-          view: 7,
-          like: 1,
-          img:
-            "http://img1.imgtn.bdimg.com/it/u=1931157584,2026440929&fm=26&gp=0.jpg",
-          id: 1,
-          tagId:1,
-        }
-      ],
-      blogList: [{
-          title: "服务器尚未备案完成",
-          content:
-            "由于服务器尚未备案完成，数据库数据还没建立，故无页面数据可加载，暂时只有本地数据可用于展示，还请谅解",
-          ctime: 1552222222,
-          view: 7,
-          like: 1,
-          img:
-            "http://img1.imgtn.bdimg.com/it/u=1931157584,2026440929&fm=26&gp=0.jpg",
-          id: 1,
-          tagname:"测试",
-          tagId:1
-        },{
-          title: "服务器尚未备案完成",
-          content:
-            "由于服务器尚未备案完成，数据库数据无法建立，故无法加载页面数据，暂时只有本地数据，还请谅解",
-          ctime: 1552222222,
-          view: 7,
-          like: 1,
-          img:
-            "http://img1.imgtn.bdimg.com/it/u=1931157584,2026440929&fm=26&gp=0.jpg",
-          id: 1,
-          tagname:"测试"
-        },{
-          title: "服务器尚未备案完成",
-          content:
-            "由于服务器尚未备案完成，数据库数据无法建立，故无法加载页面数据，暂时只有本地数据，还请谅解",
-          ctime: 1552222222,
-          view: 7,
-          like: 1,
-          img:
-            "http://img1.imgtn.bdimg.com/it/u=1931157584,2026440929&fm=26&gp=0.jpg",
-          id: 1,
-          tagname:"测试"
-        }
-        ],
-      tags: [{tagname:'测试',id:'1'}],
+      sliderlist: [],
+      blogList: [],
+      tags: [],
       total: 2,
       twolist:[
         {

@@ -2,16 +2,32 @@ var blogDao = require('../dao/blogDao');
 var timeUtil = require('../util/timeUtil');
 var respUtil = require('../util/respUtil');
 var url = require('url');
+var fs = require('fs');
 var path = new Map();
+
+
 function editBlog(request, response) {
-    request.on('data', function (data) {
-        var data = JSON.parse(data);
-        blogDao.insertBlog(data.title, data.content, 0, data.tags, timeUtil.getNow(), timeUtil.getNow(), 0, '', function (result) {
-            response.writeHead(200,{'Content-Type':'text/html;charset=UTF8'});
-            response.write(respUtil.writeResult('success', '添加成功', null));
-            response.end();
-        })
+    const data = request.body;
+    data.img = "/api/getPic?path=" + request.file.path;
+    blogDao.insertBlog(data.title, data.content, 0, data.tag, timeUtil.getNow(), timeUtil.getNow(), 0, data.img, function (result) {
+        response.writeHead(200,{'Content-Type':'text/html;charset=UTF8'});
+        response.write(respUtil.writeResult('success', '添加成功', null));
+        response.end();
     })
+  
+
+}
+function getPic(request, response) {
+    var params = url.parse(request.url,true).query;
+    try{
+        var data = fs.readFileSync("./" + params.path);
+        response.writeHead(200,{'Content-Type':'text/html;charset=UTF8'});
+        response.write(data);
+        response.end();
+    } catch(e){
+        response.writeHead(404);
+        response.end();
+    }
 
 }
 
@@ -135,4 +151,5 @@ path.set('/api/getblogbyid', getBlogById);
 path.set('/api/getspecialblog', getSpecialBlog);
 path.set('/api/gettagblog', getTagBlog);
 path.set('/api/thumbup', thumbup);
+path.set('/api/getPic', getPic);
 module.exports.path = path;

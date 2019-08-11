@@ -23,7 +23,7 @@
             </ul>
           </div>
 
-          <p class="blogtext">{{ articleDetail.content}}</p>
+          <p class="blogtext" v-html="articleDetail.content"></p>
         </div>
 
         <div class="share">
@@ -139,8 +139,8 @@ export default {
       this.$router.push({ name: "tagblog", params: { id } });
     },
     thumbsUp(id) {
-      axios.get(`/api/thumbup?id=${id}`).then(function(response) {
-        if (response.data.data.status == "success") {
+      axios.get(`/api/thumbup?id=${id}`).then(response => {
+        if (response.data.status == "success") {
           this.$message({
             message: "感谢您的支持!",
             type: "success"

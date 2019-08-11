@@ -10,7 +10,8 @@
     <h1>博客编辑</h1>
     <div>
         标题：<input type="text" placeholder="请输入标题" id="title">
-        标签：<input type="text" placeholder="请输入标签，用逗号隔开" id="tags">
+        标签：<input type="text" placeholder="请输入标签" id="tag">
+        封面图片：<input type="file" accept="image/*"  id="poster">
     </div>
 
     <div id="editor">
@@ -29,15 +30,18 @@
         function submit() {
             var content = editor.txt.text();
             var title = document.getElementById('title').value;
-            var tags = document.getElementById('tags').value;
-            var data = {
-                title,
-                content,
-                tags
-            }
+            var tag = document.getElementById('tag').value;
+            var poster = document.getElementById('poster').files[0];
+            var data = new FormData();
+            data.append('content',content);
+            data.append('title',title);
+            data.append('tag',tag);
+            data.append('poster',poster);
+            // data.append('content',content);
+
             var ajax = new XMLHttpRequest();
-            ajax.open('post', '/editBlog');
-            ajax.send(JSON.stringify(data));
+            ajax.open('post','/api/editBlog',true);
+            ajax.send(data);
             ajax.onreadystatechange = function () {
                 if (ajax.readyState == 4 && ajax.status == 200) {
                     console.log(ajax.responseText); 

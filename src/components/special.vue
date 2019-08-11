@@ -44,7 +44,7 @@ export default {
   methods:{
     openBlogById(id) {
       this.$router.push(`/blogdetail/${id}`);      
-    }
+    },
     
   }
 };

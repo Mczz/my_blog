@@ -2,12 +2,22 @@ var express = require("express");
 var history = require('connect-history-api-fallback');
 var globalConfig = require("./globalConfig");
 var loader = require('./loader');
+var multer = require('multer');
 
 var app = new express();
-app.use(history());
+app.use(history({
+    rewrites: [
+      {
+        from: /^\/api\/.*$/,
+        to: function(context) {
+            return context.parsedUrl.path
+        }
+      }
+    ]
+  }))
 app.use(express.static("./dist/"));
 
-
+var uploadSingle = multer({dest:'./file/'})
 
 
 //获取轮播图
@@ -39,13 +49,15 @@ app.get('/api/queryRandomCode',loader.get('/api/queryRandomCode'));
 app.get('/api/queryCommentsByBlogId',loader.get('/api/queryCommentsByBlogId'));
 //点赞接口
 app.get('/api/thumbup',loader.get('/api/thumbup'));
+//获取图片
+app.get('/api/getPic',loader.get('/api/getPic'));
 
 
 
 
 
 //博客编辑器接口
-// app.post('/editBlog',loader.get('/editBlog'));
+app.post('/api/editBlog',uploadSingle.single('poster'),loader.get('/api/editBlog'));
 
 
 
