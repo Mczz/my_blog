@@ -7,8 +7,11 @@
     <el-row :gutter="40">
       <el-col :span="16" class="titlebox">
         <ul>
-          <li v-for="item in blogTitleList" :key="item.id" @click="openBlogById(item.id)">{{ item.title }}</li>
-         
+          <li
+            v-for="item in blogTitleList"
+            :key="item.id"
+            @click="openBlogById(item.id)"
+          >{{ item.title }}</li>
         </ul>
       </el-col>
       <el-col :span="8">
@@ -23,7 +26,7 @@
 <script>
 import zhuanti from "@/components/zhuanti.vue";
 import guanzhu from "@/components/guanzhu.vue";
-import axios from 'axios';
+import axios from "axios";
 export default {
   //个人信息固定
   mounted() {
@@ -33,40 +36,51 @@ export default {
     window.removeEventListener("scroll", this.handleScroll);
   },
   //获取博客标题列表
-  created(){
-    var self = this;
-    axios.get("/api/getallblog").then(function(response) {
-      self.blogTitleList = response.data.data.blogTitleList;
+  created() {
+    let search = this.$route.params.search;
+    axios.get("/api/getallblog?search=" + search).then(response => {
+      this.blogTitleList = response.data.data.blogTitleList;
     });
   },
-  data () {
+  data() {
     return {
-      blogTitleList:[{
-        id:1,
-        title:'这是一篇水水水水'
-      }]
-    }
+      blogTitleList: []
+    };
   },
   components: {
     zhuanti,
     guanzhu
   },
   methods: {
-      handleScroll() {
+    handleScroll() {
       var scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop;
       if (scrollTop >= 70) {
         var top = scrollTop - 70;
-        this.$refs.fixed.$el.style.marginTop =20+ top + "px";
+        this.$refs.fixed.$el.style.marginTop = 20 + top + "px";
       } else {
         this.$refs.fixed.$el.style.marginTop = "20px";
       }
     },
     openBlogById(id) {
-      this.$router.push(`/blogdetail/${id}`);      
-    },
+      this.$router.push(`/blogdetail/${id}`);
+    }
+  },
+  watch: {
+    $route() {
+      let search = this.$route.params.search
+      if (search) {
+        axios.get("/api/getallblog?search=" + search).then(response => {
+          this.blogTitleList = response.data.data.blogTitleList;
+        });
+      }else{
+        axios.get("/api/getallblog").then(response => {
+          this.blogTitleList = response.data.data.blogTitleList;
+        });
+      }
+    }
   }
 };
 </script>

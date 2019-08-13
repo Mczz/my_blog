@@ -38,7 +38,7 @@ export default {
         return Y+M+D;
     },
     delHtmlTag(str) {
-       str.replace(/<[^>]+>/g, "");
+      str.replace(/<[^>]+>/g, "");
       return str.replace(/\&nbsp;/g, "");
 
     }

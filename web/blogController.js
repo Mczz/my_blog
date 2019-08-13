@@ -82,7 +82,8 @@ function getTwoBlog(request, response) {
     })
 }
 function getAllBlog(request, response) {
-    blogDao.getAllBlog(function (result) {
+    var search = url.parse(request.url,true).query.search;
+    blogDao.getAllBlog(search,function (result) {
         //处理查询结果
         var data = {
             blogTitleList:result

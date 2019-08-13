@@ -83,6 +83,7 @@
 import zhuanti from "@/components/zhuanti.vue";
 import recommend from "@/components/recommend.vue";
 import axios from "axios";
+import { clearTimeout, setTimeout } from 'timers';
 
 export default {
   created() {
@@ -128,7 +129,8 @@ export default {
       articleDetail: {
       },
       reply: "-1",
-      replyname: "0"
+      replyname: "0",
+      timer:null
     };
   },
  
@@ -138,18 +140,25 @@ export default {
       this.$store.dispatch("getTagBlog", id);
       this.$router.push({ name: "tagblog", params: { id } });
     },
+    //点赞
     thumbsUp(id) {
-      axios.get(`/api/thumbup?id=${id}`).then(response => {
-        if (response.data.status == "success") {
-          this.$message({
-            message: "感谢您的支持!",
-            type: "success"
-          });
-        } else {
-          this.$message("出了一点点小错误，请稍后再试");
-        }
-      });
+      // 防抖
+      clearTimeout(this.timer);
+      setTimeout(()=>{
+        axios.get(`/api/thumbup?id=${id}`).then(response => {
+          if (response.data.status == "success") {
+            this.$message({
+              message: "感谢您的支持!",
+              type: "success"
+            });
+          } else {
+            this.$message("出了一点点小错误，请稍后再试");
+          }
+       });
+      },300);
+      
     },
+    // 滚动到评论输入框
      replyFunc:function(commentId,username){
         this.reply = commentId;
         this.replyname = username;
@@ -157,14 +166,18 @@ export default {
         scrollTo(0,anchor.offsetTop)
       }
     ,
+    // 重新获取验证码
     changeCode() {
       axios.get("/api/queryRandomCode").then(data => {
         this.vcode = data.data.data;
         this.rightCode = data.data.text;
       });
     },
+    // 评论博客
     commentBlog(id) {
-      if (this.rightCode != this.mycode) {
+      clearTimeout(this.timer);
+      setTimeout(()=>{
+         if (this.rightCode != this.mycode) {
         this.$message.error("验证码不正确");
         return;
       }
@@ -189,7 +202,10 @@ export default {
       } else {
         this.$message.error("姓名与内容不能为空");
       }
+      },300)
+     
     },
+    // 时间格式
     dateParse(time) {
       var date = new Date(time * 1000);
       var Y = date.getFullYear() + "-";
@@ -200,6 +216,7 @@ export default {
       var D = date.getDate() + " ";
       return Y + M + D;
     },
+    // 时间格式带分钟
     dateParseSec(time){
         var date = new Date(time*1000);
         var Y = date.getFullYear() + '-';

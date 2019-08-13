@@ -1,5 +1,6 @@
 <template>
   <div class="index-content">
+    <!-- 轮播图及右侧两图区域 -->
     <el-row class="picbox" :gutter="20">
       <el-col :span="16">
         <el-carousel trigger="click" height="450px">
@@ -22,6 +23,7 @@
         </div>
       </el-col>
     </el-row>
+    <!-- 博客列表 -->
     <el-row :gutter="20" class="content">
       <el-col :span="16">
         <blog v-for="item in blogList" :key="item.id" :blog="item" />
@@ -32,6 +34,7 @@
           @current-change="handleCurrentChange"
         ></el-pagination>
       </el-col>
+      <!-- 右侧标签及推荐 -->
       <el-col :span="8">
         <zhuanti title="标签云">
           <ul>
@@ -46,7 +49,7 @@
         <zhuanti title="推荐文章">
           <recommend />
         </zhuanti>
-
+        <!-- 个人信息 -->
         <zhuanti ref="fixed" title="关注我 么么哒">
           <guanzhu />
         </zhuanti>
@@ -102,33 +105,7 @@ export default {
       blogList: [],
       tags: [],
       total: 2,
-      twolist:[
-        {
-          title: "由于服务器尚未备案完成，数据库数据无法建立，故无法加载页面数据，暂时只有本数据，还请谅解",
-          text:
-            "四年的时间，学习专业课程，临近毕业恨不能找个简单轻松的工作远离编程，可是微薄的工资跟专业相比，找个专业的工作工资能高好几倍。好不容易找到个跟专业符合的工作，五年...",
-          ctime: "2018-07-15",
-          tag: "慢生活",
-          view: 7,
-          like: 1,
-          img:
-            "http://img1.imgtn.bdimg.com/it/u=1931157584,2026440929&fm=26&gp=0.jpg",
-          id: 1,
-          tagId:1
-        },{
-          title: "由于服务器尚未备案完成，故无法加载页面数据，还请谅解",
-          text:
-            "四年的时间，学习专业课程，临近毕业恨不能找个简单轻松的工作远离编程，可是微薄的工资跟专业相比，找个专业的工作工资能高好几倍。好不容易找到个跟专业符合的工作，五年...",
-          ctime: "2018-07-15",
-          tag: "慢生活",
-          view: 7,
-          like: 1,
-          img:
-            "http://img1.imgtn.bdimg.com/it/u=1931157584,2026440929&fm=26&gp=0.jpg",
-          id: 1,
-          tagId:2
-        }
-      ]
+      twolist:[]
     };
   },
   computed: {

@@ -123,9 +123,14 @@ function getBlogTotal(success) {
     connection.end();
 }
 
-function getAllBlog(success) {
-    var querySql = "select id,title from blog";
-    var params = [];
+function getAllBlog(search,success) {
+    let querySql;
+    let params = [];     
+    if(search != undefined && search != 'undefined'){
+        querySql = "select id,title from blog where content like '%" + search + "%'";
+    }else{
+        querySql = "select id,title from blog";
+    }
     var connection = dbutil.createConnection();
     connection.query(querySql, params, function (error, result) {
         if (error == null) {

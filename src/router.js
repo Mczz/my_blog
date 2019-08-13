@@ -31,7 +31,7 @@ export default new Router({
           component: () => import( './pages/lmsg.vue')
         },
         {
-          path: '/allblog',
+          path: '/allblog/:search?',
           name: 'allblog',
           component: () => import( './pages/allblog.vue')
         },
